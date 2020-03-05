@@ -2,7 +2,7 @@
   <q-page>
     <q-banner
       class="text-white bg-warning"
-    >TIP：Virtual Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等，因为有可能是他们服务器压力太大</q-banner>
+    >WARN：Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等，因为有可能是他们服务器压力太大</q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">
@@ -18,8 +18,6 @@
           class="q-mr-md"
           v-model="filter.searchOJId"
           :options="OJs"
-          option-value="id"
-          option-label="name"
           emit-value
           map-options
           label="搜索OJ名"

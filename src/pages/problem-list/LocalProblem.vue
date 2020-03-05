@@ -1,6 +1,10 @@
 <template>
   <q-page>
-    <q-banner class="text-white bg-positive">TIP：本地题库指的是题目题面和样例均保留在本地的题目集，但不代表所有题目都是我们自己出的哦</q-banner>
+    <q-banner class="text-white bg-positive">TIP：本地题库指的是题目题面和样例均保留在本地的题目集，但不代表所有题目都是我们自己出的</q-banner>
+    <q-banner class="text-white bg-warning">
+      WARN：由于历史原因，题目难度由系统自动计算而并不准确，如果你觉得有问题，请
+      <q-btn outline label="报错" @click="openBugReport()"></q-btn>，当然记得选择类型【题目相关】
+    </q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">
@@ -148,6 +152,7 @@
 </template>
 
 <script>
+import BugReport from "components/BugReport";
 export default {
   data() {
     return {
@@ -171,6 +176,22 @@ export default {
     this.getProblemTags();
   },
   methods: {
+    openBugReport() {
+      this.$q
+        .dialog({
+          component: BugReport,
+          parent: this
+        })
+        .onOk(() => {
+          // alert("ok");
+        })
+        .onCancel(() => {
+          // alert("cancel");
+        })
+        .onDismiss(() => {
+          // alert("called on ok or cancel");
+        });
+    },
     cleanFilter() {
       this.filter.searchProId = "";
       this.filter.searchTitle = "";

@@ -1,5 +1,5 @@
 <template>
-  <q-page>VJ评测啊啊啊啊啊啊啊啊啊啊啊啊啊安东啊发发</q-page>
+  <q-page>你看我有几个肝？？？</q-page>
 </template>
 
 <script>

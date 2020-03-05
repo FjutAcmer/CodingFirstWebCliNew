@@ -91,7 +91,6 @@ export default {
   components: {
     PersonInfoPane,
     CleverRobot
-    // BugReport
   },
   data() {
     return {};
