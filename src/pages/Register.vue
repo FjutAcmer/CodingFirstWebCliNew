@@ -111,7 +111,7 @@
           </q-card-section>
           <q-card-actions align="around">
             <q-btn glossy type="reset" color="secondary" size="lg">重置内容</q-btn>
-            <q-btn glossy type="submit" color="primary" size="lg">注册账号</q-btn>
+            <q-btn glossy :loading="btnLoading" type="submit" color="primary" size="lg">注册账号</q-btn>
           </q-card-actions>
         </q-form>
       </q-card>
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import AvatarUploader from "components/AvatarUploader.vue";
+import AvatarUploader from "components/common/AvatarUploader.vue";
 export default {
   components: {
     AvatarUploader
@@ -139,6 +139,7 @@ export default {
         motto: "",
         avatarUrl: ""
       },
+      btnLoading: false,
       // 触发上传
       doUpload: false,
       // 是否上传完成
@@ -155,6 +156,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.btnLoading = true;
       this.doUpload = true;
     },
     onReset() {
@@ -195,7 +197,7 @@ export default {
         this.$router.push({ name: "index" });
       } else {
       }
-      console.log(this.data);
+      this.btnLoading = false;
     }
   }
 };

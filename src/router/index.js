@@ -27,9 +27,9 @@ export default function(/* { store, ssrContext } */) {
   const defaultTitle = "CodingFirst | 一码当先";
   Router.beforeEach((to, from, next) => {
     if (to.meta.title) {
-      if (to.name === "Submit") {
+      if (to.name === "submit") {
         to.meta.title = "题目 - " + to.query.pid;
-      } else if (to.name === "VJSubmit") {
+      } else if (to.name === "VJsubmit") {
         to.meta.title = "VJudge题目 " + to.query.OJId + "-" + to.query.ProbNum;
       } else if (to.name === "Contest") {
         var name = "";

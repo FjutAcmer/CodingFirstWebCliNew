@@ -95,9 +95,15 @@
               <span class="text-orange text-weight-bold">{{scope.row.problemId}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="Title" label="题目标题" min-width="60%">
+          <el-table-column label="题目标题" min-width="60%">
             <template slot-scope="scope">
-              <q-btn no-caps flat color="primary" :label="scope.row.title" />
+              <q-btn
+                no-caps
+                flat
+                color="primary"
+                @click="toSubmit(scope.row.problemId)"
+                :label="scope.row.title"
+              />
             </template>
           </el-table-column>
           <el-table-column label="通过率（通过人数/总提交数）" min-width="50%">
@@ -152,7 +158,7 @@
 </template>
 
 <script>
-import BugReport from "components/BugReport";
+import BugReport from "components/common/BugReport";
 export default {
   data() {
     return {
@@ -223,6 +229,14 @@ export default {
       let params = new URLSearchParams();
       let data = await this.$axios.get("/problem_tag/all", params);
       this.tagOptions = data.datas[0];
+    },
+    toSubmit(val) {
+      this.$router.push({
+        name: "submit",
+        query: {
+          id: val
+        }
+      });
     }
   }
 };

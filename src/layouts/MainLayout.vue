@@ -84,9 +84,9 @@
 </template>
 
 <script>
-import PersonInfoPane from "components/PersonInfoPane";
-import CleverRobot from "components/CleverRobot";
-import BugReport from "components/BugReport";
+import PersonInfoPane from "components/common/PersonInfoPane";
+import CleverRobot from "components/common/CleverRobot";
+import BugReport from "components/common/BugReport";
 export default {
   components: {
     PersonInfoPane,
@@ -98,11 +98,9 @@ export default {
   computed: {
     fullNickname() {
       let info = this.$store.getters["global/getPrivateInfo"];
-      let adjectiveTitle = info.adjectiveTitle?info.adjectiveTitle:""
-      let articleTitle = info.articleTitle?info.articleTitle:""
-      return (
-        adjectiveTitle + " " + articleTitle + " " + info.nickname
-      );
+      let adjectiveTitle = info.adjectiveTitle ? info.adjectiveTitle : "";
+      let articleTitle = info.articleTitle ? info.articleTitle : "";
+      return adjectiveTitle + " " + articleTitle + " " + info.nickname;
     }
   },
   methods: {

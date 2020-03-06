@@ -38,6 +38,14 @@ const routes = [
         ]
       },
       {
+        path: "submit",
+        name: "submit",
+        component: () => import("pages/submit/LocalSubmit.vue"),
+        meta: {
+          title: "本地题目"
+        }
+      },
+      {
         path: "status",
         name: "status",
         component: () => import("layouts/StatusLayout.vue"),
