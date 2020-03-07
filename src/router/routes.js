@@ -95,14 +95,7 @@ const routes = [
           title: "项目简介"
         }
       },
-      {
-        path: "develop-log",
-        name: "devLog",
-        component: () => import("pages/Devlog.vue"),
-        meta: {
-          title: "开发日志"
-        }
-      },
+
       {
         path: "develop-team",
         name: "devTeam",

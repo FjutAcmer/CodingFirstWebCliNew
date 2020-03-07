@@ -76,7 +76,7 @@
           @size-change="sizeChange"
           @current-change="switchPage"
         ></el-pagination>
-        <el-table :data="data" v-loading="loading">
+        <el-table :data="data">
           <el-table-column label="#" min-width="8%">
             <template slot-scope="scope">
               <span flat class="text-black">{{scope.row.id}}</span>
@@ -127,6 +127,9 @@
             @size-change="sizeChange"
             @current-change="switchPage"
           ></el-pagination>
+          <q-inner-loading :showing="loading">
+            <q-spinner-gears size="50px" color="primary" />
+          </q-inner-loading>
         </div>
       </q-card-section>
     </q-card>

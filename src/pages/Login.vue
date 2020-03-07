@@ -45,7 +45,7 @@
         </q-card-actions>
         <div class="row justify-between">
           <q-btn size="md" class="col-4" flat color="red">忘记密码？</q-btn>
-          <q-btn size="md" class="col-4" flat color="red">没有账号？注册一个</q-btn>
+          <q-btn size="md" class="col-4" flat color="red" to="/register">没有账号？注册一个</q-btn>
         </div>
       </q-form>
     </q-card>

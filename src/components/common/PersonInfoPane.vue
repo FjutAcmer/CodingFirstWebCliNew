@@ -36,7 +36,24 @@ export default {
     return {};
   },
   methods: {
-    async doLogOut() {
+    doLogOut() {
+      this.$q
+        .dialog({
+          title: "退出登录",
+          message: "确定要退出登录吗？",
+          ok: {
+            push: true
+          },
+          cancel: {
+            push: true,
+            color: "negative"
+          }
+        })
+        .onOk(() => {
+          this.logout();
+        });
+    },
+    async logout() {
       let params = await new URLSearchParams();
       params.append("username", this.$store.getters["global/getUsername"]);
       this.$axios.post("/user/logout", params);

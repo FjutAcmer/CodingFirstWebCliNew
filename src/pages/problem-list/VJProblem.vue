@@ -77,7 +77,7 @@
           @size-change="sizeChange"
           @current-change="switchPage"
         ></el-pagination>
-        <el-table :data="data" v-loading="loading">
+        <el-table :data="data">
           <el-table-column label="OJ名" prop="originOJ" min-width="15%">
             <template slot-scope="scope">
               <span class="text-dark text-weight-bold">{{scope.row.originOJ}}</span>
@@ -100,9 +100,6 @@
           </el-table-column>
           <el-table-column label="更新时间" min-width="30%">
             <template slot-scope="scope">
-              <!-- <i class="el-icon-success" v-if="scope.row.status===0"></i>
-              <i class="el-icon-loading" v-else-if="scope.row.status===1"></i>
-              <i class="el-icon-warning" v-else></i>-->
               <span class="text-secondary text-weight-bold">{{formatDate(scope.row.triggerTime)}}</span>
             </template>
           </el-table-column>
@@ -112,6 +109,7 @@
             </template>
           </el-table-column>
         </el-table>
+
         <div class="row">
           <q-space />
           <el-pagination
@@ -123,6 +121,9 @@
             @size-change="sizeChange"
             @current-change="switchPage"
           ></el-pagination>
+          <q-inner-loading :showing="loading">
+            <q-spinner-gears size="50px" color="primary" />
+          </q-inner-loading>
         </div>
       </q-card-section>
     </q-card>
