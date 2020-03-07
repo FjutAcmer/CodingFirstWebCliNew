@@ -88,6 +88,30 @@ const routes = [
         }
       },
       {
+        path: "project-introduction",
+        name: "projectIntroduction",
+        component: () => import("pages/ProjectIntroduction.vue"),
+        meta: {
+          title: "项目简介"
+        }
+      },
+      {
+        path: "develop-log",
+        name: "devLog",
+        component: () => import("pages/Devlog.vue"),
+        meta: {
+          title: "开发日志"
+        }
+      },
+      {
+        path: "develop-team",
+        name: "devTeam",
+        component: () => import("pages/DevTeam.vue"),
+        meta: {
+          title: "开发团队"
+        }
+      },
+      {
         path: "*",
         component: () => import("pages/Error404.vue"),
         meta: {

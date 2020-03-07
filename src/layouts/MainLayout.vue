@@ -68,8 +68,9 @@
         <q-btn-group outline>
           <q-btn outline color="white" label="Bug反馈" @click="openBugReport()" />
           <q-btn outline color="white" label="FAQ" />
-          <q-btn outline color="white" label="开发日志" />
-          <q-btn outline color="white" label="开发团队" />
+          <q-btn outline color="white" label="项目简介" to="/project-introduction" />
+          <q-btn outline color="white" label="开发日志" to="/develop-log" />
+          <q-btn outline color="white" label="开发团队" to="/develop-team" />
           <q-btn outline color="white" label="加入我们" />
           <q-btn outline color="white" label="闽ICP备19024997号" />
         </q-btn-group>

@@ -8,7 +8,7 @@
     </p>
     <p class="text-faded">
       <strong>(404)</strong>
-      对不起，这个页面正在施工中（摇了 Axiang 吧，他肝不够）
+      对不起，这个页面正在施工中（摇了包工头阿翔吧，他肝不够）
     </p>
     <q-btn color="secondary" style="width:200px;" to="/" label="返回首页" />
   </div>
