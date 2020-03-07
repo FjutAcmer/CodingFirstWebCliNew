@@ -2,7 +2,9 @@
   <div class="robot-body fixed-bottom-left z-top">
     <div v-if="showRobot">
       <q-img class="robot-img row" :src="robotUrl" spinner-color="white">
-        <q-tooltip v-model="showText" anchor="top right" self="top middle">{{text}}</q-tooltip>
+        <q-tooltip v-model="showText" anchor="top right" self="top middle">
+          <div class="text-subtitle2">{{text}}</div>
+        </q-tooltip>
       </q-img>
       <q-btn color="negative" size="md" @click="shutdownRobot()">点我消灭机器人</q-btn>
     </div>

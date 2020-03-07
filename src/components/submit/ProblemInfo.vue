@@ -90,22 +90,22 @@
               <div v-html="problemView.output" />
             </q-card-section>
           </q-card>
-          <div v-for="item in problemSamples" :key="item.id">
-            <q-card class="q-mb-md">
-              <q-card-section class="bg-secondary q-pa-sm">
+          <div class="row" v-for="item in problemSamples" :key="item.id">
+            <q-card class="col q-mb-md q-mr-xs">
+              <q-card-section class="bg-grey q-pa-sm">
                 <div
                   class="text-subtitle1 text-white text-weight-bold"
-                >输入样例 - {{String.fromCharCode(item.caseOrder+65)}}</div>
+                >输入样例 {{String.fromCharCode(item.caseOrder+65)}}</div>
               </q-card-section>
               <q-card-section>
                 <div v-html="item.inputCase" />
               </q-card-section>
             </q-card>
-            <q-card class="q-mb-md">
-              <q-card-section class="bg-secondary q-pa-sm">
+            <q-card class="col q-mb-md q-ml-xs">
+              <q-card-section class="bg-grey q-pa-sm">
                 <div
                   class="text-subtitle1 text-white text-weight-bold"
-                >输出样例 - {{String.fromCharCode(item.caseOrder+65)}}</div>
+                >输出样例 {{String.fromCharCode(item.caseOrder+65)}}</div>
               </q-card-section>
               <q-card-section>
                 <div v-html="item.outputCase" />
@@ -117,7 +117,7 @@
               <div class="text-subtitle1 text-white text-weight-bold">提示</div>
             </q-card-section>
             <q-card-section>
-              <div>这里是题目提示</div>
+              <div v-html="problemView.hint" />
             </q-card-section>
           </q-card>
         </div>
@@ -126,12 +126,79 @@
         <q-avatar color="primary" text-color="white" size="40px" icon="drag_indicator" />
       </template>
       <template v-slot:after>
-        <div class="q-pa-md">
-          <div
-            v-for="n in 10"
-            :key="n"
-            class="q-my-md"
-          >{{ n }}. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</div>
+        <div class="q-pa-md" v-if="$store.getters['global/getIsLogin']">
+          <div class="row q-gutter-x-sm q-mb-sm">
+            <q-space />
+            <q-select
+              class="col"
+              v-model="data.language"
+              emit-value
+              outlined
+              label="选择语言"
+              :options="langOptions"
+            />
+            <q-btn @click="clearCode()" class="col-1" icon="clear_all" round color="negative">
+              <q-tooltip>
+                <div class="text-subtitle2">清空代码</div>
+              </q-tooltip>
+            </q-btn>
+            <q-btn @click="goFullScreen()" class="col-1" icon="fullscreen" round color="primary"></q-btn>
+          </div>
+          <AceEditor
+            class="q-mb-md"
+            :language="data.language"
+            :readOnly="!$store.getters['global/getIsLogin']"
+            :isFull="true"
+            @input="getCode"
+            :value="data.code"
+          ></AceEditor>
+          <!-- 使用dialog模拟全屏 -->
+          <q-dialog maximized v-model="fullScreen">
+            <q-card class="bg-white">
+              <q-bar>
+                <q-space />
+                <q-btn color="primary" round icon="fullscreen_exit" v-close-popup>
+                  <q-tooltip content-class="bg-white text-primary text-subtitle2">取消全屏</q-tooltip>
+                </q-btn>
+              </q-bar>
+              <q-card-section>
+                <AceEditor
+                  :language="data.language"
+                  :readOnly="!$store.getters['global/getIsLogin']"
+                  :isFull="true"
+                  @input="getCode"
+                  :value="data.code"
+                ></AceEditor>
+              </q-card-section>
+            </q-card>
+          </q-dialog>
+          <div class="row q-gutter-x-sm">
+            <q-space />
+            <q-btn>测试</q-btn>
+            <q-btn icon="check" color="primary" text-color="white" @click="handleSubmit()">提交</q-btn>
+          </div>
+        </div>
+        <div v-else>
+          <div class="q-ml-md" style="width: 90% ">
+            <q-chat-message :text="['龟龟，为什么我不能答题？']" sent />
+            <q-chat-message :text="['因为你莫得登录了啦']" />
+            <q-chat-message :text="['那我要咋整啊']" sent />
+            <q-chat-message :text="['有账号不啦？']" />
+            <q-chat-message :text="['木有']" sent />
+            <q-chat-message :text="['注册一个，晓得不，那就能答题辽']" />
+            <q-chat-message :text="['要得要得，那在哪注册呢？']" sent />
+            <q-chat-message>
+              点
+              <q-btn @click="toRegister()" outline>注册</q-btn>喽，很快的，不耽误你几分钟
+            </q-chat-message>
+            <q-chat-message :text="['注册完了捏？']" sent />
+            <q-chat-message>
+              点
+              <q-btn @click="toLogin()" outline>登录</q-btn>喽,
+              登录完可以有更多玩法了啦
+            </q-chat-message>
+            <q-chat-message :text="['好的好的，明白辽']" sent />
+          </div>
         </div>
       </template>
     </q-splitter>
@@ -139,17 +206,44 @@
 </template>
 
 <script>
+import AceEditor from "components/submit/AceEditor";
 import { date } from "quasar";
 export default {
   props: {},
+  components: {
+    AceEditor
+  },
   watch: {},
   data() {
     return {
       splitterModel: 50, // start at 50%
+      fullScreen: false,
       problemInfo: "",
       problemView: "",
       problemSamples: [],
-      userSolved: ""
+      userSolved: "",
+      data: {
+        language: "GCC",
+        code: ""
+      },
+      langOptions: [
+        {
+          value: "G++",
+          label: "G++"
+        },
+        {
+          value: "GCC",
+          label: "GCC"
+        },
+        {
+          value: "JAVA",
+          label: "JAVA"
+        },
+        {
+          value: "Python",
+          label: "Python2"
+        }
+      ]
     };
   },
   mounted() {
@@ -159,8 +253,35 @@ export default {
     }
   },
   methods: {
+    toRegister() {
+      this.$router.push({ name: "register" });
+    },
+    toLogin() {
+      this.$router.push({ name: "login" });
+    },
     formatDate(val) {
       return date.formatDate(val, "YYYY-MM-DD");
+    },
+    getCode(code) {
+      this.data.code = code;
+    },
+    clearCode() {
+      this.$q
+        .dialog({
+          title: "警告",
+          message: "您即将清空代码，请确认",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          this.data.code = "";
+        });
+    },
+    goFullScreen() {
+      this.fullScreen = true;
+    },
+    handleSubmit() {
+      console.log(this.data);
     },
     async getProblemInfo() {
       let params = new URLSearchParams();
@@ -176,8 +297,19 @@ export default {
       params.append("problemId", this.$route.query.id);
       params.append("username", this.$store.getters["global/getUsername"]);
       let data = await this.$axios.post("/problem/userSolved", params);
-      this.userSolved = data.datas[0];
-      console.log(this.userSolved);
+      if (data.datas[0].length === 0) {
+        this.userSolved = {
+          id: "",
+          username: "",
+          problemId: "",
+          tryCount: 0,
+          solvedCount: 0,
+          lastTryTime: "",
+          firstSolvedTime: ""
+        };
+      } else {
+        this.userSolved = data.datas[0];
+      }
     }
   }
 };

@@ -28,7 +28,7 @@ export default function(/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     if (to.meta.title) {
       if (to.name === "submit") {
-        to.meta.title = "题目 - " + to.query.pid;
+        to.meta.title = "题目 - " + to.query.id;
       } else if (to.name === "VJsubmit") {
         to.meta.title = "VJudge题目 " + to.query.OJId + "-" + to.query.ProbNum;
       } else if (to.name === "Contest") {
