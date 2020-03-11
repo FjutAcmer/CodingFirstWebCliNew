@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-ma-xl row">
       <q-space></q-space>
-      <q-card class="my-card text-white bg-grey">
+      <q-card class="my-card text-black bg-grey-2">
         <q-card-section>
           <div class="text-h4">现任开发团队</div>
         </q-card-section>

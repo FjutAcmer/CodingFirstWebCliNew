@@ -41,7 +41,7 @@ module.exports = function(ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ["Notify", "LoadingBar", "Dialog", "Cookies"],
+      plugins: ["Notify", "LoadingBar", "Dialog", "Cookies", "Loading"],
       config: {
         notify: {
           position: "top-right",

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ProblemInfo from "components/submit/ProblemInfo";
+import ProblemInfo from "components/submit/LocalProblemInfo";
 export default {
   components: {
     ProblemInfo

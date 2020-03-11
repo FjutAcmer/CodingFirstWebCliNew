@@ -19,7 +19,7 @@
               lazy-rules
               :rules="[
           val => val !== null && val !== '' || '用户名不能为空',
-          val => val.length > 4 && val.length < 16 || '4 - 16个字符',
+          val => val.length > 3 && val.length < 17 || '4 - 16个字符',
           val => /^\w+$/.test(val) || '请输入数字、字母或者下划线' ]"
             />
             <q-input
@@ -58,7 +58,7 @@
               lazy-rules
               :rules="[
           val => val !== null && val !== '' || '昵称不能为空',
-          val => val.length > 0 && val.length < 8 || '1 - 8个字符',
+          val => val.length > 0 && val.length < 9 || '1 - 8个字符',
            ]"
             />
 
@@ -157,7 +157,16 @@ export default {
   methods: {
     onSubmit() {
       this.btnLoading = true;
-      this.doUpload = true;
+      // 如果图片还没上传
+      if (this.doUpload === false) {
+        // 触发上传，并在上传中执行注册方法
+        this.doUpload = true;
+      }
+      // 如果图片已经上传，因为某种原因上传时的注册失败
+      else {
+        // 手动执行注册
+        this.doRegister();
+      }
     },
     onReset() {
       this.data = {
@@ -186,7 +195,9 @@ export default {
       params.append("phone", this.data.phone);
       params.append("motto", this.data.motto);
       params.append("avatarUrl", this.data.avatarUrl);
-      let data = await this.$axios.post("/user/register", params);
+      let data = await this.$axios.post("/user/register", params).catch(() => {
+        this.btnLoading = false;
+      });
       if (data.code === 10000) {
         this.$q.notify({
           message: "账号注册成功！",

@@ -7,7 +7,7 @@
             {{problemInfo.title}}
             <div v-if="$store.getters['global/getIsLogin']">
               <q-chip
-                v-if="userSolved.solvedCount >= 0"
+                v-if="userSolved.solvedCount > 0"
                 text-color="white"
                 icon="check"
                 color="positive"
@@ -130,19 +130,19 @@
           <div class="row q-gutter-x-sm q-mb-sm">
             <q-space />
             <q-select
-              class="col"
+              class="width-select"
               v-model="data.language"
               emit-value
               outlined
               label="选择语言"
               :options="langOptions"
             />
-            <q-btn @click="clearCode()" class="col-1" icon="clear_all" round color="negative">
+            <q-btn @click="clearCode()" icon="clear_all" round color="negative">
               <q-tooltip>
                 <div class="text-subtitle2">清空代码</div>
               </q-tooltip>
             </q-btn>
-            <q-btn @click="goFullScreen()" class="col-1" icon="fullscreen" round color="primary"></q-btn>
+            <q-btn @click="goFullScreen()" icon="fullscreen" round color="primary"></q-btn>
           </div>
           <AceEditor
             class="q-mb-md"
@@ -172,10 +172,9 @@
               </q-card-section>
             </q-card>
           </q-dialog>
-          <div class="row q-gutter-x-sm">
-            <q-space />
-            <q-btn>测试</q-btn>
-            <q-btn icon="check" color="primary" text-color="white" @click="handleSubmit()">提交</q-btn>
+          <div class="row q-gutter-x-sm items-center">
+            <q-chip>所写代码共 {{data.code.replace(/\s+/g,"").length}} 个字符（不含空白）</q-chip>
+            <q-btn glossy color="primary" text-color="white" @click="handleSubmit()">提交评测</q-btn>
           </div>
         </div>
         <div v-else>
@@ -208,6 +207,7 @@
 <script>
 import AceEditor from "components/submit/AceEditor";
 import { date } from "quasar";
+import { Icon } from "element-ui";
 export default {
   props: {},
   components: {
@@ -281,7 +281,51 @@ export default {
       this.fullScreen = true;
     },
     handleSubmit() {
-      console.log(this.data);
+      if (this.data.code.replace(/\s+/g, "").length < 50) {
+        this.$q.notify({
+          message: "50个字符都不给我",
+          caption: "假代码，拒绝评测！哼",
+          icon: "error",
+          color: "negative"
+        });
+      } else {
+        this.doSubmit();
+      }
+    },
+    async doSubmit() {
+      this.$q.loading.show({
+        message: "正在提交代码到评测机，请稍等"
+      });
+      let params = new URLSearchParams();
+      params.append("problemId", this.$route.query.id);
+      params.append("code", this.data.code);
+      params.append("language", this.data.language);
+      params.append("username", this.$store.getters["global/getUsername"]);
+      let data = await this.$axios
+        .post("/judgeStatus/submit", params)
+        .catch(() => {
+          this.$q.loading.hide();
+        });
+      if (data.code === 10000) {
+        this.$q
+          .dialog({
+            title: "提交成功",
+            message: "评测姬需要一定的时间检查你的代码，等等哦",
+            color: "primary",
+            persistent: true,
+            ok: {
+              label: "点我进入评测结果列表查看",
+              push: true,
+              color: "primary"
+            }
+          })
+          .onOk(() => {
+            this.$router.push({
+              name: "localStatus"
+            });
+          });
+      }
+      this.$q.loading.hide();
     },
     async getProblemInfo() {
       let params = new URLSearchParams();
@@ -318,5 +362,8 @@ export default {
 <style lang="scss" scoped>
 .probleminfo-splitter {
   min-height: 500px;
+  .width-select {
+    width: 200px;
+  }
 }
 </style>

@@ -89,7 +89,13 @@
           </el-table-column>
           <el-table-column label="题目" min-width="6%">
             <template slot-scope="scope">
-              <q-btn dense flat color="warning" :label="scope.row.problemId" />
+              <q-btn
+                @click="toLocalProblem(scope.row.problemId)"
+                dense
+                flat
+                color="warning"
+                :label="scope.row.problemId"
+              />
             </template>
           </el-table-column>
           <el-table-column label="评测结果" min-width="14%">
@@ -104,7 +110,12 @@
           </el-table-column>
           <el-table-column label="代码" min-width="8%">
             <template slot-scope="scope">
-              <span class="text-primary">{{scope.row.language}}</span>
+              <q-btn
+                flat
+                dense
+                color="primary"
+                @click="toLocalResult(scope.row.id)"
+              >{{scope.row.language}}</q-btn>
             </template>
           </el-table-column>
           <el-table-column prop="timeUsed" label="耗时" min-width="8%"></el-table-column>
@@ -165,6 +176,22 @@ export default {
     this.getStatus();
   },
   methods: {
+    toLocalProblem(probId) {
+      this.$router.push({
+        name: "localSubmit",
+        query: {
+          id: probId
+        }
+      });
+    },
+    toLocalResult(JudgeId) {
+      this.$router.push({
+        name: "localResult",
+        query: {
+          id: JudgeId
+        }
+      });
+    },
     cleanFilter() {
       this.filter.searchName = "";
       this.filter.searchProId = "";

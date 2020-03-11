@@ -24,7 +24,7 @@
         </div>
       </q-toolbar>
 
-      <q-tabs class="glossy" align="left" inline-label indicator-color="blue">
+      <q-tabs class="glossy" align="left" inline-label indicator-color="white">
         <q-route-tab icon="home" to="/" label="主 页" />
         <q-route-tab icon="menu" to="/problem-list" label="题 库" />
         <!-- <q-btn-dropdown auto-close stretch flat icon="menu" label="题 库">

@@ -64,11 +64,19 @@ export default {
       return isJPG && isLt2M;
     },
     async uploadAvatar() {
-      let formData = new FormData();
-      formData.append("avatar", this.file);
-      let data = await this.$axios.post("/upload/avatar", formData);
-      this.imageUrl = process.env.API + "/image/avatar/" + data.datas[0];
-      this.$emit("returnUrl", this.imageUrl);
+      // 如果file有东西，代表有上传图片
+      if (this.file) {
+        let formData = new FormData();
+        formData.append("avatar", this.file);
+        let data = await this.$axios.post("/upload/avatar", formData);
+        this.imageUrl = process.env.API + "/image/avatar/" + data.datas[0];
+        // emit返回的字符串
+        this.$emit("returnUrl", this.imageUrl);
+      }
+      // 没上传的赋值为空字符串
+      else {
+        this.$emit("returnUrl", "");
+      }
     }
   }
 };

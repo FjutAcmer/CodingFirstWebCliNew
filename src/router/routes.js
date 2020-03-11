@@ -39,7 +39,7 @@ const routes = [
       },
       {
         path: "submit",
-        name: "submit",
+        name: "localSubmit",
         component: () => import("pages/submit/LocalSubmit.vue"),
         meta: {
           title: "本地题目"
@@ -70,6 +70,14 @@ const routes = [
             }
           }
         ]
+      },
+      {
+        path: "result",
+        name: "localResult",
+        component: () => import("pages/result/LocalResult.vue"),
+        meta: {
+          title: "评测详情"
+        }
       },
       {
         path: "login",

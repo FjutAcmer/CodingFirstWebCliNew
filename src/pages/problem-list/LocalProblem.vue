@@ -67,7 +67,7 @@
           @size-change="sizeChange"
           @current-change="switchPage"
         ></el-pagination>
-        <el-table :data="data" v-loading="loading">
+        <el-table :data="data">
           <el-table-column
             v-if="this.$store.getters['global/getIsLogin']"
             label="是否解决"
@@ -236,7 +236,7 @@ export default {
     },
     toSubmit(val) {
       this.$router.push({
-        name: "submit",
+        name: "localSubmit",
         query: {
           id: val
         }
