@@ -3,6 +3,7 @@ export default function() {
     username: "",
     token: "",
     isLogin: false,
-    privateInfo: ""
+    privateInfo: "",
+    notReadMsgCount: 0
   };
 }

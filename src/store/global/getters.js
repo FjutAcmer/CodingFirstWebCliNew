@@ -13,3 +13,7 @@ export function getIsLogin(state) {
 export function getPrivateInfo(state) {
   return state.privateInfo;
 }
+
+export function getNotReadMsgCount(state){
+  return state.notReadMsgCount;
+}

@@ -130,6 +130,7 @@
           <div class="row q-gutter-x-sm q-mb-sm">
             <q-space />
             <q-select
+              dense
               class="width-select"
               v-model="data.language"
               emit-value
@@ -137,12 +138,12 @@
               label="选择语言"
               :options="langOptions"
             />
-            <q-btn @click="clearCode()" icon="clear_all" round color="negative">
+            <q-btn @click="clearCode()" icon="clear_all" color="negative">
               <q-tooltip>
                 <div class="text-subtitle2">清空代码</div>
               </q-tooltip>
             </q-btn>
-            <q-btn @click="goFullScreen()" icon="fullscreen" round color="primary"></q-btn>
+            <q-btn @click="goFullScreen()" icon="fullscreen" color="primary"></q-btn>
           </div>
           <AceEditor
             class="q-mb-md"
@@ -271,7 +272,14 @@ export default {
           title: "警告",
           message: "您即将清空代码，请确认",
           cancel: true,
-          persistent: true
+          ok: {
+            push: true,
+            label: "确认清空代码",
+            color: "negative"
+          },
+          cancel: {
+            push: true
+          }
         })
         .onOk(() => {
           this.data.code = "";

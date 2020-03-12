@@ -10,13 +10,17 @@
         </q-toolbar-title>
         <q-space />
         <div v-if="!this.$store.getters['global/getIsLogin']">
-          <q-tabs inline-label indicator-color="#ffffff">
+          <q-tabs inline-label>
             <q-route-tab icon="person_add" to="/register" label="注册" />
             <q-route-tab icon="person" to="/login" label="登录" />
           </q-tabs>
         </div>
         <div v-else>
-          <q-btn icon="person" :label="fullNickname" class="glossy" color="secondry">
+          <q-btn glossy>
+            <q-avatar size="30px">
+              <img :src="$store.getters['global/getPrivateInfo'].avatarUrl" />
+            </q-avatar>
+            <div class="q-ml-sm">{{fullNickname}}</div>
             <q-menu>
               <PersonInfoPane></PersonInfoPane>
             </q-menu>
@@ -24,20 +28,9 @@
         </div>
       </q-toolbar>
 
-      <q-tabs class="glossy" align="left" inline-label indicator-color="white">
+      <q-tabs active-color="gold" class="glossy" align="left" inline-label>
         <q-route-tab icon="home" to="/" label="主 页" />
         <q-route-tab icon="menu" to="/problem-list" label="题 库" />
-        <!-- <q-btn-dropdown auto-close stretch flat icon="menu" label="题 库">
-          <q-list avatar>
-            <q-item clickable>
-              <q-item-section icon="chevron_right">本地题库</q-item-section>
-            </q-item>
-
-            <q-item clickable>
-              <q-item-section icon="chevron_right">VJ题库</q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>-->
         <q-route-tab icon="gavel" to="/status" label="评 测" />
         <q-route-tab icon="receipt" to="/contest" label="比 赛" />
         <q-route-tab icon="format_list_numbered" to="/border" label="排 名" />

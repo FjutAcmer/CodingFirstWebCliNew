@@ -1,7 +1,7 @@
 <template>
   <q-page class="row">
-    <q-space class="col"></q-space>
-    <q-card class="col-4 q-my-xl shadow-6 my-card">
+    <q-space></q-space>
+    <q-card class="q-my-xl shadow-6 my-card">
       <q-card-section class="bg-primary text-white">
         <div class="text-h6">欢迎登录！</div>
       </q-card-section>
@@ -49,7 +49,7 @@
         </div>
       </q-form>
     </q-card>
-    <q-space class="col"></q-space>
+    <q-space></q-space>
   </q-page>
 </template>
 
@@ -102,7 +102,9 @@ export default {
         username: this.data.loginName,
         password: this.data.loginPwd
       });
-      let data = await this.$axios.post("/user/login", params);
+      let data = await this.$axios.post("/user/login", params).catch(() => {
+        this.btnLoading = false;
+      });
       if (data.code === 10000) {
         this.$store.commit("global/setIsLogin", true);
         this.$store.commit("global/setUsername", data.datas[0]);
@@ -111,7 +113,7 @@ export default {
         this.$router.push({ name: "index" });
         this.$q.notify({
           message: "登录成功",
-          caption: "欢迎回来，亲爱的" + data.datas[0],
+          caption: "欢迎回来",
           color: "positive",
           icon: "done",
           timeout: 2000
@@ -125,5 +127,6 @@ export default {
 
 <style lang="scss" scoped>
 .my-card {
+  min-width: 30%;
 }
 </style>

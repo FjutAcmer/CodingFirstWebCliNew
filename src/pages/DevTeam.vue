@@ -24,7 +24,7 @@
                   <div class="text-h5 row">
                     开发组组长
                     <q-space></q-space>
-                    <q-btn color="primary" @click="callLeader">联系组长</q-btn>
+                    <q-btn no-caps color="primary" @click="callLeader">联系组长 wyxworkmail@163.com</q-btn>
                   </div>
                 </q-item-label>
                 <q-item-label caption>

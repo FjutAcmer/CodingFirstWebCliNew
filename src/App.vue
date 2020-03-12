@@ -7,6 +7,10 @@
 <script>
 export default {
   name: "App",
+  watch: {
+    // 路由跳转时获取一次未读消息数量
+    $route: "getNotReadMsgCount"
+  },
   created() {
     // add by axiang [20190612] 每次刷新时，将sessionStorge内的内容还原到store内，解决刷新后数据丢失的问题
     if (sessionStorage.getItem("store")) {
@@ -22,6 +26,17 @@ export default {
     window.addEventListener("beforeunload", () => {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
     });
+  },
+  methods: {
+    // 获取用户的未读消息数量
+    async getNotReadMsgCount() {
+      if (this.$store.getters["global/getIsLogin"]) {
+        let params = new URLSearchParams();
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios.post("user/message/notRead/count", params);
+        this.$store.commit("global/setNotReadMsgCount", data.datas[0]);
+      }
+    }
   }
 };
 </script>

@@ -121,10 +121,10 @@
             @size-change="sizeChange"
             @current-change="switchPage"
           ></el-pagination>
-          <q-inner-loading :showing="loading">
-            <q-spinner-gears size="50px" color="primary" />
-          </q-inner-loading>
         </div>
+        <q-inner-loading :showing="loading">
+          <q-spinner-gears size="50px" color="primary" />
+        </q-inner-loading>
       </q-card-section>
     </q-card>
     <br />

@@ -1,3 +1,9 @@
+/**
+ * 命名规则：
+ * path： 均为小写，不同单词间以“-”分隔，按照路径命名无需对应
+ * name: 除首个单词外，其他单词的首字母大写，且需与component命名对应
+ * component: 即文件名，每个单词的首字母大写，且需与name命名对应
+ */
 const routes = [
   {
     path: "/",
@@ -93,6 +99,14 @@ const routes = [
         component: () => import("pages/Register.vue"),
         meta: {
           title: "注册"
+        }
+      },
+      {
+        path: "message",
+        name: "message",
+        component: () => import("pages/message/Message.vue"),
+        meta: {
+          title: "站内消息"
         }
       },
       {
