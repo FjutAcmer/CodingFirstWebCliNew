@@ -1,10 +1,13 @@
 <template>
   <q-page>
     <q-banner
+      class="text-white bg-positive"
+    >TIP：Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等，因为有可能是他们服务器压力太大</q-banner>
+    <q-banner
       class="text-white bg-warning"
-    >WARN：Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等，因为有可能是他们服务器压力太大</q-banner>
+    >WARN：为了缓解对Virtual Judge的持续访问压力（防止IP被ban），所有近期被访问过的题目会在我们服务器上缓存15分钟，如果出现奇怪的错误，请到VJ源地址查看是否对应</q-banner>
     <q-card class="my-card">
-      <q-card-section class="bg-blue">
+      <q-card-section class="bg-orange">
         <div class="text-h6 text-white">
           <q-avatar color="secondary">
             <img src="https://vjudge.net/static/images/logo.ico" />
@@ -192,9 +195,11 @@ export default {
       params.append("probNum", this.filter.searchProId);
       params.append("title", this.filter.searchTitle);
       params.append("source", this.filter.searchResource);
-      let data = await this.$axios.get("/vj/problem/list", params).catch(() => {
-        this.loading = false;
-      });
+      let data = await this.$axios
+        .post("/vj/problem/list", params)
+        .catch(() => {
+          this.loading = false;
+        });
       if (data.code === 10000) {
         this.data = data.datas[0].data;
         this.pagination.totalRows = data.datas[0].recordsTotal;
@@ -219,6 +224,15 @@ export default {
         });
       }
       this.loading = false;
+    },
+    toVJSubmit(originOJ, originProb) {
+      this.$router.push({
+        name: "VJSubmit",
+        query: {
+          OJId: originOJ,
+          ProbNum: originProb
+        }
+      });
     }
   }
 };

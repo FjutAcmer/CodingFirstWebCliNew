@@ -48,6 +48,12 @@ export default {
         case "login":
           this.text = "欢迎登录，登录后享受更多内容哦";
           break;
+        case "VJSubmit":
+          this.showRobot = false;
+          break;
+        case "localSubmit":
+          this.showRobot = false;
+          break;
         default:
           this.text = "好无聊啊，我什么时候才能变聪明";
           break;

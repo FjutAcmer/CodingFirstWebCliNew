@@ -8,21 +8,19 @@
     <q-separator />
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="submit">
-        <ProblemInfo></ProblemInfo>
+        <VJProblemInfo></VJProblemInfo>
       </q-tab-panel>
-
       <q-tab-panel name="solve">优秀题解</q-tab-panel>
-
       <q-tab-panel name="detail">题目详情</q-tab-panel>
     </q-tab-panels>
   </q-page>
 </template>
 
 <script>
-import ProblemInfo from "components/submit/LocalProblemInfo";
+import VJProblemInfo from "components/submit/VJProblemInfo.vue";
 export default {
   components: {
-    ProblemInfo
+    VJProblemInfo
   },
   data() {
     return {

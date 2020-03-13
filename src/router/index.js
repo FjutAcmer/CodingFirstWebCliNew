@@ -27,10 +27,10 @@ export default function(/* { store, ssrContext } */) {
   const defaultTitle = "CodingFirst | 一码当先";
   Router.beforeEach((to, from, next) => {
     if (to.meta.title) {
-      if (to.name === "submit") {
-        to.meta.title = "题目 - " + to.query.id;
-      } else if (to.name === "VJsubmit") {
-        to.meta.title = "VJudge题目 " + to.query.OJId + "-" + to.query.ProbNum;
+      if (to.name === "localSubmit") {
+        to.meta.title = "本地题目 - " + to.query.id;
+      } else if (to.name === "VJSubmit") {
+        to.meta.title = "VJ题目 " + to.query.OJId + "-" + to.query.ProbNum;
       } else if (to.name === "Contest") {
         var name = "";
         if (to.query.kind === "0") {

@@ -52,6 +52,14 @@ const routes = [
         }
       },
       {
+        path: "submit/vj",
+        name: "VJSubmit",
+        component: () => import("pages/submit/VJSubmit.vue"),
+        meta: {
+          title: "VJ题目"
+        }
+      },
+      {
         path: "status",
         name: "status",
         component: () => import("layouts/StatusLayout.vue"),

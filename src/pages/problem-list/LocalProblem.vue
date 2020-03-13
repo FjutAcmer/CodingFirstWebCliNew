@@ -224,7 +224,9 @@ export default {
       params.append("tagId", this.filter.searchTag);
       params.append("title", this.filter.searchTitle);
       params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.get("/problem/list", params);
+      let data = await this.$axios.get("/problem/list", params).catch(() => {
+        this.loading = false;
+      });
       this.data = data.datas[0];
       this.pagination.totalRows = data.datas[1];
       this.loading = false;

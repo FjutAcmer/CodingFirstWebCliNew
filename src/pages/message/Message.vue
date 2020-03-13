@@ -249,7 +249,6 @@ export default {
       }
     },
     async deleteAll() {
-      // TODO
       let params = new URLSearchParams();
       params.append("username", this.$store.getters["global/getUsername"]);
       let data = await this.$axios.post("/user/message/delete/all", params);

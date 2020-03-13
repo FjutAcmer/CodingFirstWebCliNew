@@ -232,7 +232,11 @@ export default {
       params.append("language", this.filter.searchLanguage);
       params.append("result", this.filter.searchResult);
       params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.get("/judgeStatus/list", params);
+      let data = await this.$axios
+        .get("/judgeStatus/list", params)
+        .catch(() => {
+          this.loading = false;
+        });
       this.data = data.datas[0];
       this.pagination.totalRows = data.datas[1];
       this.loading = false;

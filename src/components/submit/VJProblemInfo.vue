@@ -4,7 +4,7 @@
       <template v-slot:before>
         <div class="q-pa-md">
           <div class="text-h4 q-mb-md">
-            {{problemInfo.title}}
+            {{problemInfo.probTitle}}
             <div v-if="$store.getters['global/getIsLogin']">
               <q-chip
                 v-if="userSolved.solvedCount > 0"
@@ -14,112 +14,41 @@
               >最早于{{formatDate(userSolved.firstSolvedTime)}} Accepted</q-chip>
               <q-chip v-else text-color="white" icon="close" color="negative">未解决</q-chip>
             </div>
-            <q-chip
-              v-if="problemInfo.judgeOption === 0"
-              text-color="white"
-              icon="local_activity"
-              color="info"
-            >
-              默认评测
+            <q-chip text-color="white" icon="local_activity" color="primary">
+              VJ评测优先
               <q-tooltip>
-                <div class="text-subtitle2">按照默认的评测顺序进行评测</div>
+                <div class="text-subtitle2">优先交由VJ平台进行评测</div>
               </q-tooltip>
             </q-chip>
             <q-chip
-              v-else-if="problemInfo.judgeOption === 1"
               text-color="white"
-              icon="local_activity"
-              color="primary"
-            >
-              本地评测优先
-              <q-tooltip>
-                <div class="text-subtitle2">优先交由本地评测机进行评测</div>
-              </q-tooltip>
-            </q-chip>
-            <q-chip
-              v-else-if="problemInfo.judgeOption === 2"
-              text-color="white"
-              icon="looks_3"
-              color="warning"
-            >
-              第三方评测优先
-              <q-tooltip>
-                <div class="text-subtitle2">优先交由第三方进行评测</div>
-              </q-tooltip>
-            </q-chip>
-            <q-chip
-              v-if="problemView.spj === 1"
-              text-color="white"
-              icon="adjust"
-              color="negative"
-            >特判SPJ</q-chip>
-            <q-chip
-              v-else-if="problemView.spj === 0"
-              text-color="white"
-              icon="brightness_1"
+              icon="person"
               color="accent"
-            >非特判SPJ</q-chip>
-            <q-chip text-color="white" icon="person" color="warning">出题人：{{problemInfo.author}}</q-chip>
+            >VJ源：{{problemInfo.virtualJudgeUrl}}</q-chip>
+            <q-chip text-color="white" icon="person" color="info">初始源：{{problemInfo.originUrl}}</q-chip>
+            <q-chip
+              text-color="white"
+              icon="person"
+              color="warning"
+            >作者：{{problemInfo.author?problemInfo.author:"-"}}</q-chip>
           </div>
           <div class="q-mb-md q-gutter-x-md q-gutter-y-md text-weight-bold">
-            <q-chip square>时间限制：{{problemView.timeLimit}}</q-chip>
-            <q-chip square>内存限制：{{problemView.memoryLimit}}</q-chip>
-            <q-chip square>64位Integer的IO类型：{{problemView.intFormat}}</q-chip>
+            <q-chip square>时间限制（TL）：{{problemInfo.timeLimit?problemInfo.timeLimit:'-'}}</q-chip>
+            <q-chip square>
+              内存限制（ML）：
+              {{problemInfo.memoryLimit}}
+            </q-chip>
+            <q-chip square>操作系统（OS）：{{problemInfo.os?problemInfo.os:'-'}}</q-chip>
+            <q-chip square>来自（SOURCE）：{{problemInfo.source?problemInfo.source:'-'}}</q-chip>
           </div>
-          <q-card class="q-mb-md">
-            <q-card-section class="bg-grey q-pa-sm">
-              <div class="text-subtitle1 text-white text-weight-bold">题目描述</div>
-            </q-card-section>
-            <q-card-section>
-              <div v-html="problemView.description" />
-            </q-card-section>
-          </q-card>
-          <q-card class="q-mb-md">
-            <q-card-section class="bg-grey q-pa-sm">
-              <div class="text-subtitle1 text-white text-weight-bold">输入</div>
-            </q-card-section>
-            <q-card-section>
-              <div v-html="problemView.input" />
-            </q-card-section>
-          </q-card>
-          <q-card class="q-mb-md">
-            <q-card-section class="bg-grey q-pa-sm">
-              <div class="text-subtitle1 text-white text-weight-bold">输出</div>
-            </q-card-section>
-            <q-card-section>
-              <div v-html="problemView.output" />
-            </q-card-section>
-          </q-card>
-          <div class="row" v-for="item in problemSamples" :key="item.id">
-            <q-card class="col q-mb-md q-mr-xs">
-              <q-card-section class="bg-grey q-pa-sm">
-                <div
-                  class="text-subtitle1 text-white text-weight-bold"
-                >输入样例 {{String.fromCharCode(item.caseOrder+65)}}</div>
-              </q-card-section>
-              <q-card-section>
-                <div v-html="item.inputCase" />
-              </q-card-section>
-            </q-card>
-            <q-card class="col q-mb-md q-ml-xs">
-              <q-card-section class="bg-grey q-pa-sm">
-                <div
-                  class="text-subtitle1 text-white text-weight-bold"
-                >输出样例 {{String.fromCharCode(item.caseOrder+65)}}</div>
-              </q-card-section>
-              <q-card-section>
-                <div v-html="item.outputCase" />
-              </q-card-section>
-            </q-card>
-          </div>
-          <q-card class="q-mb-md">
-            <q-card-section class="bg-grey q-pa-sm">
-              <div class="text-subtitle1 text-white text-weight-bold">提示</div>
-            </q-card-section>
-            <q-card-section>
-              <div v-html="problemView.hint" />
-            </q-card-section>
-          </q-card>
+          <iframe
+            class="prob-des-iframe"
+            :src="problemInfo.problemDescriptionUrl"
+            width="100%"
+            height="900px"
+            frameborder="0"
+            scrolling="yes"
+          ></iframe>
         </div>
       </template>
       <template v-slot:separator>
@@ -129,6 +58,7 @@
         <div class="q-pa-md" v-if="$store.getters['global/getIsLogin']">
           <div class="row q-gutter-x-sm q-mb-sm">
             <q-space />
+            <q-chip color="warning" text-color="white">WARN：VJ题目下，编辑器默认样式为JAVA，暂不可更改</q-chip>
             <q-select
               dense
               class="width-select"
@@ -137,7 +67,7 @@
               map-options
               outlined
               label="选择语言"
-              :options="langOptions"
+              :options="languages"
             />
             <q-btn @click="clearCode()" icon="clear_all" color="negative">
               <q-tooltip>
@@ -165,7 +95,7 @@
               </q-bar>
               <q-card-section>
                 <AceEditor
-                  :language="data.language"
+                  language="default"
                   :readOnly="!$store.getters['global/getIsLogin']"
                   :isFull="true"
                   @input="getCode"
@@ -221,35 +151,17 @@ export default {
       splitterModel: 50, // start at 50%
       fullScreen: false,
       problemInfo: "",
-      problemView: "",
-      problemSamples: [],
       userSolved: "",
       data: {
-        language: "GCC",
+        language: "",
         code: ""
       },
-      langOptions: [
-        {
-          value: "G++",
-          label: "G++"
-        },
-        {
-          value: "GCC",
-          label: "GCC"
-        },
-        {
-          value: "JAVA",
-          label: "JAVA"
-        },
-        {
-          value: "Python",
-          label: "Python2"
-        }
-      ]
+      languages: []
     };
   },
   mounted() {
     this.getProblemInfo();
+    this.getLanguages();
     if (this.$store.getters["global/getIsLogin"]) {
       this.getUserSolved();
     }
@@ -302,66 +214,63 @@ export default {
       }
     },
     async doSubmit() {
+      console.log(this.data);
       this.$q.loading.show({
-        message: "正在提交代码到评测机，请稍等"
+        message: "正在提交代码到服务端，服务端将把代码交由VJ平台评测，请稍等"
       });
-      let params = new URLSearchParams();
-      params.append("problemId", this.$route.query.id);
-      params.append("code", this.data.code);
-      params.append("language", this.data.language);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios
-        .post("/judgeStatus/submit", params)
-        .catch(() => {
-          this.$q.loading.hide();
-        });
-      if (data.code === 10000) {
-        this.$q
-          .dialog({
-            title: "提交成功",
-            message: "评测姬需要一定的时间检查你的代码，等等哦",
-            color: "primary",
-            persistent: true,
-            ok: {
-              label: "点我进入评测结果列表查看",
-              push: true,
-              color: "primary"
-            }
-          })
-          .onOk(() => {
-            this.$router.push({
-              name: "localStatus"
-            });
-          });
-      }
-      this.$q.loading.hide();
+      // let params = new URLSearchParams();
+      // params.append("username", this.$store.getters["global/getUsername"]);
+      // let data = await this.$axios
+      //   .post("/judgeStatus/submit", params)
+      //   .catch(() => {
+      //     this.$q.loading.hide();
+      //   });
+      // if (data.code === 10000) {
+      //   this.$q
+      //     .dialog({
+      //       title: "提交成功",
+      //       message: "评测姬需要一定的时间检查你的代码，等等哦",
+      //       color: "primary",
+      //       persistent: true,
+      //       ok: {
+      //         label: "点我进入评测结果列表查看",
+      //         push: true,
+      //         color: "primary"
+      //       }
+      //     })
+      //     .onOk(() => {
+      //       this.$router.push({
+      //         name: "localStatus"
+      //       });
+      //     });
+      // }
+      // this.$q.loading.hide();
     },
     async getProblemInfo() {
       let params = new URLSearchParams();
-      params.append("problemId", this.$route.query.id);
+      params.append("OJId", this.$route.query.OJId);
+      params.append("probNum", this.$route.query.ProbNum);
       params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.post("/problem/info", params);
+      let data = await this.$axios.post("/vj/problem/info", params);
       this.problemInfo = data.datas[0];
-      this.problemView = data.datas[1];
-      this.problemSamples = data.datas[2];
     },
     async getUserSolved() {
+      // TODO：获取用户在VJ上的解答情况
+    },
+    // 拿到这个OJ对应的可提交语言集
+    async getLanguages() {
       let params = new URLSearchParams();
-      params.append("problemId", this.$route.query.id);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.post("/problem/userSolved", params);
-      if (data.datas[0].length === 0) {
-        this.userSolved = {
-          id: "",
-          username: "",
-          problemId: "",
-          tryCount: 0,
-          solvedCount: 0,
-          lastTryTime: "",
-          firstSolvedTime: ""
+      let data = await this.$axios.get("/vj/util/ojs", params);
+      let OJs = data.datas[0];
+      this.languages = [];
+      let OJId = this.$route.query.OJId;
+      let temp = OJs[OJId].languages;
+      for (let key in temp) {
+        let tempObj = {
+          value: key,
+          label: temp[key]
         };
-      } else {
-        this.userSolved = data.datas[0];
+        this.languages.push(tempObj);
       }
     }
   }
@@ -372,7 +281,7 @@ export default {
 .probleminfo-splitter {
   min-height: 500px;
   .width-select {
-    width: 200px;
+    width: 180px;
   }
 }
 </style>

@@ -58,6 +58,10 @@ const modeArray = [
   {
     name: "Python",
     path: "ace/mode/python"
+  },
+  {
+    name: "default",
+    path: "ace/mode/java"
   }
 ];
 
