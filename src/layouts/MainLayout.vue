@@ -11,8 +11,8 @@
         <q-space />
         <div v-if="!this.$store.getters['global/getIsLogin']">
           <q-tabs inline-label>
-            <q-route-tab icon="person_add" to="/register" label="注册" />
-            <q-route-tab icon="person" to="/login" label="登录" />
+            <q-route-tab icon="person_add" :to="{ name:'register' }" label="注册" />
+            <q-route-tab icon="person" :to="{ name:'login' }" label="登录" />
           </q-tabs>
         </div>
         <div v-else>
@@ -62,10 +62,10 @@
           <q-btn outline color="white" label="Bug反馈" @click="openBugReport()" />
           <q-btn outline color="white" label="FAQ" />
           <q-btn outline color="white" label="项目简介" to="/project-introduction" />
-          <q-btn outline color="white" label="开发日志" @click="toGithub()" />
+          <q-btn outline color="white" label="开发日志" to="/develop-log" />
           <q-btn outline color="white" label="开发团队" to="/develop-team" />
           <q-btn outline color="white" label="加入我们" />
-          <q-btn outline color="white" label="闽ICP备19024997号" />
+          <q-btn outline color="white" label="闽ICP备19024997号" @click="toBeian()" />
         </q-btn-group>
       </div>
       <div class="row justify-center text-h7 text-amber-7">
@@ -98,6 +98,9 @@ export default {
     }
   },
   methods: {
+    toBeian() {
+      window.open("http://www.beian.miit.gov.cn/");
+    },
     openBugReport() {
       this.$q
         .dialog({
@@ -113,14 +116,6 @@ export default {
         .onDismiss(() => {
           // alert("called on ok or cancel");
         });
-    },
-    toGithub() {
-      window.open(
-        "https://github.com/axiangcoding/CodingFirstApiSys/commits/master"
-      );
-      window.open(
-        "https://github.com/axiangcoding/CodingFirstWebCliNew/commits/master"
-      );
     }
   }
 };

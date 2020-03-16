@@ -212,7 +212,7 @@ export default {
       } else if (str === "Presentation Error") {
         return "warning";
       } else if (str === "Pending..." || str === "Judging...") {
-        return "info";
+        return "grey";
       } else if (str === "Submit Error" || str.substring(0, 5) === "Score") {
         return "blue";
       } else {

@@ -113,7 +113,7 @@ export default {
         this.$router.push({ name: "index" });
         this.$q.notify({
           message: "登录成功",
-          caption: "欢迎回来",
+          caption: "欢迎回来，多做点题，水水讨论区，又是美好的一天",
           color: "positive",
           icon: "done",
           timeout: 2000

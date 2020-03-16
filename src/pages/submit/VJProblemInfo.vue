@@ -5,6 +5,10 @@
         <div class="q-pa-md">
           <div class="text-h4 q-mb-md">
             {{problemInfo.probTitle}}
+            <q-chip
+              text-color="white"
+              color="green"
+            >来自 {{ $route.query.OJId}} 第 {{$route.query.ProbNum}} 题</q-chip>
             <div v-if="$store.getters['global/getIsLogin']">
               <q-chip
                 v-if="userSolved.solvedCount > 0"
@@ -22,10 +26,10 @@
             </q-chip>
             <q-chip
               text-color="white"
-              icon="person"
+              icon="domain"
               color="accent"
             >VJ源：{{problemInfo.virtualJudgeUrl}}</q-chip>
-            <q-chip text-color="white" icon="person" color="info">初始源：{{problemInfo.originUrl}}</q-chip>
+            <q-chip text-color="white" icon="apartment" color="info">初始源：{{problemInfo.originUrl}}</q-chip>
             <q-chip
               text-color="white"
               icon="person"
@@ -41,6 +45,7 @@
             <q-chip square>操作系统（OS）：{{problemInfo.os?problemInfo.os:'-'}}</q-chip>
             <q-chip square>来自（SOURCE）：{{problemInfo.source?problemInfo.source:'-'}}</q-chip>
           </div>
+
           <iframe
             class="prob-des-iframe"
             :src="problemInfo.problemDescriptionUrl"
@@ -106,6 +111,11 @@
           </q-dialog>
           <div class="row q-gutter-x-sm items-center">
             <q-chip>所写代码共 {{data.code.replace(/\s+/g,"").length}} 个字符（不含空白）</q-chip>
+            <div v-if="needCaptcha">
+              <img :src="captchaUrl" alt="验证码" />
+              <q-input dense v-model="data.captcha">输入验证码</q-input>
+            </div>
+
             <q-btn glossy color="primary" text-color="white" @click="handleSubmit()">提交评测</q-btn>
           </div>
         </div>
@@ -150,11 +160,14 @@ export default {
     return {
       splitterModel: 50, // start at 50%
       fullScreen: false,
+      needCaptcha: false,
+      captchaUrl: "",
       problemInfo: "",
       userSolved: "",
       data: {
         language: "",
-        code: ""
+        code: "",
+        captcha: ""
       },
       languages: []
     };
@@ -214,37 +227,60 @@ export default {
       }
     },
     async doSubmit() {
-      console.log(this.data);
+      if (this.data.language === "") {
+        this.$q.notify({
+          message: "选择评测语言",
+          caption: "不选择评测语言我怎么评测呢？",
+          icon: "error",
+          color: "negative"
+        });
+        return;
+      }
       this.$q.loading.show({
         message: "正在提交代码到服务端，服务端将把代码交由VJ平台评测，请稍等"
       });
-      // let params = new URLSearchParams();
-      // params.append("username", this.$store.getters["global/getUsername"]);
-      // let data = await this.$axios
-      //   .post("/judgeStatus/submit", params)
-      //   .catch(() => {
-      //     this.$q.loading.hide();
-      //   });
-      // if (data.code === 10000) {
-      //   this.$q
-      //     .dialog({
-      //       title: "提交成功",
-      //       message: "评测姬需要一定的时间检查你的代码，等等哦",
-      //       color: "primary",
-      //       persistent: true,
-      //       ok: {
-      //         label: "点我进入评测结果列表查看",
-      //         push: true,
-      //         color: "primary"
-      //       }
-      //     })
-      //     .onOk(() => {
-      //       this.$router.push({
-      //         name: "localStatus"
-      //       });
-      //     });
-      // }
-      // this.$q.loading.hide();
+      let params = new URLSearchParams();
+      params.append("username", this.$store.getters["global/getUsername"]);
+      params.append("oj", this.$route.query.OJId);
+      params.append("probNum", this.$route.query.ProbNum);
+      params.append("language", this.data.language);
+      params.append("source", this.data.code);
+      params.append("captcha", this.data.captcha);
+      let data = await this.$axios
+        .post("/vj/judgeResult/submit", params)
+        .catch(() => {
+          this.$q.loading.hide();
+        });
+      if (data.code === 10000) {
+        this.$q
+          .dialog({
+            title: "提交成功",
+            message: "VJ的评测姬需要一定的时间检查你的代码，等等哦",
+            color: "primary",
+            // persistent: true,
+            ok: {
+              label: "点我进入VJ评测结果列表查看",
+              push: true,
+              color: "primary"
+            }
+          })
+          .onOk(() => {
+            // this.$router.push({
+            //   name: "localStatus"
+            // });
+          });
+      } else if (data.code === 10004) {
+        this.$q.notify({
+          message: "输入验证码",
+          caption: "提交过多，输入验证码证明你不是机器人（其实我是）",
+          icon: "error",
+          color: "warning"
+        });
+        this.needCaptcha = true;
+        this.captchaUrl = data.datas[0];
+      }
+      console.log(data);
+      this.$q.loading.hide();
     },
     async getProblemInfo() {
       let params = new URLSearchParams();

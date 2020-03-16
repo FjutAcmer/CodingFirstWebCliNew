@@ -126,7 +126,7 @@ export default {
     },
     handleModelPathChange(language) {
       for (let i = 0; i < modeArray.length; i++) {
-        if (language === modeArray[i].name) {
+        if (language.toLowerCase() === modeArray[i].name.toLowerCase()) {
           this.modePath = modeArray[i].path;
           this.aceEditor.getSession().setMode(this.modePath);
           break;

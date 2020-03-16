@@ -14,7 +14,7 @@
           </div>
           <div class="text-h6">
             由
-            <q-chip color="primary" text-color="white" size="lg">
+            <q-chip clickable color="primary" text-color="white" size="lg">
               <q-avatar>
                 <img :src="userCustomInfo.avatarUrl" />
               </q-avatar>

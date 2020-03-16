@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import VJProblemInfo from "components/submit/VJProblemInfo.vue";
+import VJProblemInfo from "pages/submit/VJProblemInfo.vue";
 export default {
   components: {
     VJProblemInfo

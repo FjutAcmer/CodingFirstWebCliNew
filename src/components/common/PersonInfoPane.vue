@@ -4,10 +4,10 @@
       <div style="max-width: 200px">
         <div class="text-h6 q-mb-md">个人面板</div>
         <div class="q-gutter-x-sm q-gutter-y-sm">
-          <q-btn color="positive" label="每日签到">
+          <q-btn color="positive" label="签到记录" :to="{ name:'checkIn' }">
             <!-- <q-badge color="orange" floating>1</q-badge> -->
           </q-btn>
-          <q-btn color="primary" label="站内消息" to="/message">
+          <q-btn color="primary" label="站内消息" :to="{ name:'message' }">
             <q-badge
               v-if="$store.getters['global/getNotReadMsgCount'] > 0"
               color="negative"

@@ -94,27 +94,35 @@ const routes = [
         }
       },
       {
-        path: "login",
+        path: "user/login",
         name: "login",
-        component: () => import("pages/Login.vue"),
+        component: () => import("pages/user/Login.vue"),
         meta: {
           title: "登录"
         }
       },
       {
-        path: "register",
+        path: "user/register",
         name: "register",
-        component: () => import("pages/Register.vue"),
+        component: () => import("pages/user/Register.vue"),
         meta: {
           title: "注册"
         }
       },
       {
-        path: "message",
+        path: "user/message",
         name: "message",
         component: () => import("pages/message/Message.vue"),
         meta: {
           title: "站内消息"
+        }
+      },
+      {
+        path: "user/check-in",
+        name: "checkIn",
+        component: () => import("pages/user/CheckIn.vue"),
+        meta: {
+          title: "签到记录"
         }
       },
       {
@@ -125,7 +133,14 @@ const routes = [
           title: "项目简介"
         }
       },
-
+      {
+        path: "develop-log",
+        name: "devLog",
+        component: () => import("pages/DevLog.vue"),
+        meta: {
+          title: "开发日志"
+        }
+      },
       {
         path: "develop-team",
         name: "devTeam",
