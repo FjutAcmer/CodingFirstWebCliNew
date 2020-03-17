@@ -110,7 +110,7 @@ export default {
         this.$store.commit("global/setUsername", data.datas[0]);
         this.$store.commit("global/setToken", data.datas[1]);
         this.$store.commit("global/setPrivateInfo", data.datas[2]);
-        this.$router.push({ name: "index" });
+        this.$router.back(-1);
         this.$q.notify({
           message: "登录成功",
           caption: "欢迎回来，多做点题，水水讨论区，又是美好的一天",

@@ -111,11 +111,10 @@
           </q-dialog>
           <div class="row q-gutter-x-sm items-center">
             <q-chip>所写代码共 {{data.code.replace(/\s+/g,"").length}} 个字符（不含空白）</q-chip>
-            <div v-if="needCaptcha">
-              <img :src="captchaUrl" alt="验证码" />
-              <q-input dense v-model="data.captcha">输入验证码</q-input>
+            <div class="row" v-if="needCaptcha">
+              <img @click="getCaptcha()" class="captcha-img" :src="captchaUrl" alt="验证码" />
+              <q-input dense v-model="data.captcha" label="输入验证码"></q-input>
             </div>
-
             <q-btn glossy color="primary" text-color="white" @click="handleSubmit()">提交评测</q-btn>
           </div>
         </div>
@@ -252,6 +251,7 @@ export default {
           this.$q.loading.hide();
         });
       if (data.code === 10000) {
+        this.needCaptcha = false;
         this.$q
           .dialog({
             title: "提交成功",
@@ -272,15 +272,21 @@ export default {
       } else if (data.code === 10004) {
         this.$q.notify({
           message: "输入验证码",
-          caption: "提交过多，输入验证码证明你不是机器人（其实我是）",
-          icon: "error",
+          caption: "由于提交过多，VJ平台需要获取验证码",
           color: "warning"
         });
         this.needCaptcha = true;
-        this.captchaUrl = data.datas[0];
+        this.captchaUrl = process.env.API + data.datas[0];
       }
       console.log(data);
       this.$q.loading.hide();
+    },
+    async getCaptcha() {
+      // let params = new URLSearchParams();
+      // params.append("username", this.$store.getters["global/getUsername"]);
+      // let data = await this.$axios.post("/vj/util/captcha", params);
+      // console.log(data)
+      // this.captchaUrl = data.datas[0];
     },
     async getProblemInfo() {
       let params = new URLSearchParams();
@@ -318,6 +324,13 @@ export default {
   min-height: 500px;
   .width-select {
     width: 180px;
+  }
+  .captcha-img {
+    &:hover {
+      cursor: pointer;
+    }
+    width: 200px;
+    height: 80px;
   }
 }
 </style>
