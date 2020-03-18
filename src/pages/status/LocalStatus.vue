@@ -43,7 +43,7 @@
           label="评测结果"
           style="min-width: 200px; max-width: 300px"
         >
-          <template v-if="filter.searchResult" v-slot:append>
+          <template v-if="filter.searchResult !== ''" v-slot:append>
             <q-icon name="cancel" @click.stop="filter.searchResult = ''" class="cursor-pointer" />
           </template>
         </q-select>
@@ -58,7 +58,7 @@
           label="评测语言"
           style="min-width: 200px; max-width: 300px"
         >
-          <template v-if="filter.searchLanguage" v-slot:append>
+          <template v-if="filter.searchLanguage !== ''" v-slot:append>
             <q-icon name="cancel" @click.stop="filter.searchLanguage = ''" class="cursor-pointer" />
           </template>
         </q-select>

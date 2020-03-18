@@ -43,9 +43,11 @@ export default {
       }
       switch (this.$route.name) {
         case "index":
+          this.showRobot = true;
           this.text = "欢迎来到CodingFirst，点我查看更多好玩的内容哦";
           break;
         case "login":
+          this.showRobot = true;
           this.text = "欢迎登录，登录后享受更多内容哦";
           break;
         case "VJSubmit":
@@ -55,6 +57,7 @@ export default {
           this.showRobot = false;
           break;
         default:
+          this.showRobot = true;
           this.text = "好无聊啊，我什么时候才能变聪明";
           break;
       }

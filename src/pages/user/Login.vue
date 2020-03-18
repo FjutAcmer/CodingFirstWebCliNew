@@ -16,7 +16,8 @@
             lazy-rules
             :rules="[
           val => val !== null && val !== '' || '请输入用户名',
-          val => val.length > 4 && val.length < 16 || '4 - 16个字符']"
+          val => val.length > 4 && val.length < 16 || '4 - 16个字符',
+          val => /^\w+$/.test(val) || '请输入数字、字母或者下划线']"
           />
           <q-input
             color="blue"
@@ -26,8 +27,8 @@
             label="密码"
             :rules="[
           val => val !== null && val !== '' || '请输入密码',
-          val => val.length > 4 && val.length < 16 || '4 - 16个字符'
-        ]"
+          val => val.length > 4 && val.length < 16 || '4 - 16个字符',
+          val => /^\w+$/.test(val) || '请输入数字、字母或者下划线']"
           >
             <template v-slot:append>
               <q-icon
@@ -37,6 +38,17 @@
               />
             </template>
           </q-input>
+
+          <div class="row q-gutter-x-md">
+            <img @click="getCaptcha()" class="captcha-img" :src="captchaUrl" alt="验证码" />
+            <q-input
+              v-model="data.captcha"
+              label="请输入验证码"
+              :rules="[
+              val => val !== null && val !== '' || '请输入验证码',
+              val => /^\w+$/.test(val) || '请输入数字、字母']"
+            ></q-input>
+          </div>
           <q-checkbox v-model="rememberPwd" label="记住密码（请确保是本人的电脑）" />
         </q-card-section>
         <q-card-actions align="around">
@@ -59,15 +71,16 @@ export default {
     return {
       data: {
         loginName: "",
-        loginPwd: ""
+        loginPwd: "",
+        captcha: ""
       },
+      captchaUrl: "",
       rememberPwd: false,
       isPwd: true,
       btnLoading: false
     };
   },
   mounted() {
-    console.log(this.rememberPwd);
     this.rememberPwd = this.$q.cookies.has("rememberPwd")
       ? this.$q.cookies.get("rememberPwd")
       : this.rememberPwd;
@@ -77,6 +90,7 @@ export default {
     this.data.loginPwd = this.$q.cookies.has("loginPwd")
       ? this.$q.cookies.get("loginPwd")
       : this.data.loginPwd;
+    this.getGuestToken();
   },
   methods: {
     onSubmit() {
@@ -96,11 +110,24 @@ export default {
       this.data.loginPwd = "";
       this.rememberPwd = false;
     },
-    doRegister() {},
+    async getGuestToken() {
+      if (!this.$store.getters["global/getIsLogin"]) {
+        let data = await this.$axios.post("/user/guest/token");
+        console.log(data);
+        this.$store.commit("global/setToken", data.datas[0]);
+        console.log(this.$store.getters["global/getToken"]);
+        this.getCaptcha();
+      }
+    },
+    async getCaptcha() {
+      let data = await this.$axios.post("/util/captcha");
+      this.captchaUrl = process.env.API + data.datas[0];
+    },
     async doLogin() {
       let params = new URLSearchParams({
         username: this.data.loginName,
-        password: this.data.loginPwd
+        password: this.data.loginPwd,
+        captcha: this.data.captcha
       });
       let data = await this.$axios.post("/user/login", params).catch(() => {
         this.btnLoading = false;
@@ -118,6 +145,13 @@ export default {
           icon: "done",
           timeout: 2000
         });
+      } else if (data.code === 10005) {
+        this.$q.notify({
+          message: "验证码过期",
+          color: "negative",
+          icon: "error"
+        });
+        this.getCaptcha();
       }
       this.btnLoading = false;
     }
@@ -128,5 +162,10 @@ export default {
 <style lang="scss" scoped>
 .my-card {
   min-width: 30%;
+  .captcha-img {
+    cursor: pointer;
+    width: 180px;
+    height: 60px;
+  }
 }
 </style>

@@ -58,9 +58,9 @@ export default {
         });
     },
     async logout() {
-      let params = await new URLSearchParams();
+      let params =  new URLSearchParams();
       params.append("username", this.$store.getters["global/getUsername"]);
-      this.$axios.post("/user/logout", params);
+      await this.$axios.post("/user/logout", params);
       this.$store.commit("global/logout");
       this.$q.notify({
         message: "已退出登录",
@@ -70,6 +70,11 @@ export default {
         timeout: 2000
       });
       this.$router.push("/");
+      this.getGuestToken();
+    },
+    async getGuestToken() {
+      let data = await this.$axios.post("user/guest/token");
+      this.$store.commit("global/setToken", data.datas[0]);
     }
   }
 };
