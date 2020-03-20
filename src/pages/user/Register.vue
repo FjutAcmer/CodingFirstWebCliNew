@@ -108,6 +108,16 @@
               placeholder="随便说两句，让大家知道你是谁，不说也行"
             />
             <AvatarUploader class="q-my-md" :doUpload="doUpload" @returnUrl="getAvatarUrl" />
+            <div class="row q-gutter-x-md">
+              <img @click="getCaptcha()" class="captcha-img" :src="captchaUrl" alt="验证码" />
+              <q-input
+                v-model="data.captcha"
+                label="请输入验证码"
+                :rules="[
+              val => val !== null && val !== '' || '请输入验证码',
+              val => /^\w+$/.test(val) || '请输入数字、字母']"
+              ></q-input>
+            </div>
           </q-card-section>
           <q-card-actions align="around">
             <q-btn glossy type="reset" color="secondary" size="lg">重置内容</q-btn>
@@ -137,8 +147,10 @@ export default {
         email: "",
         phone: "",
         motto: "",
-        avatarUrl: ""
+        avatarUrl: "",
+        captcha: ""
       },
+      captchaUrl: "",
       btnLoading: false,
       // 触发上传
       doUpload: false,
@@ -153,6 +165,9 @@ export default {
         this.doRegister();
       }
     }
+  },
+  mounted() {
+    this.getGuestToken();
   },
   methods: {
     onSubmit() {
@@ -195,6 +210,7 @@ export default {
       params.append("phone", this.data.phone);
       params.append("motto", this.data.motto);
       params.append("avatarUrl", this.data.avatarUrl);
+      params.append("captcha", this.data.captcha);
       let data = await this.$axios.post("/user/register", params).catch(() => {
         this.btnLoading = false;
       });
@@ -206,9 +222,28 @@ export default {
           color: "positive"
         });
         this.$router.push({ name: "index" });
-      } else {
+      } else if (data.code === 10005) {
+        this.$q.notify({
+          message: data.msg,
+          color: "negative",
+          icon: "error"
+        });
+        this.getCaptcha();
       }
       this.btnLoading = false;
+    },
+    async getGuestToken() {
+      if (!this.$store.getters["global/getIsLogin"]) {
+        let data = await this.$axios.post("/user/guest/token");
+        console.log(data);
+        this.$store.commit("global/setToken", data.datas[0]);
+        console.log(this.$store.getters["global/getToken"]);
+        this.getCaptcha();
+      }
+    },
+    async getCaptcha() {
+      let data = await this.$axios.post("/util/captcha");
+      this.captchaUrl = process.env.API + data.datas[0];
     }
   }
 };
@@ -217,5 +252,10 @@ export default {
 <style lang="scss" scoped>
 .my-card {
   min-height: 600px;
+  .captcha-img {
+    cursor: pointer;
+    width: 180px;
+    height: 60px;
+  }
 }
 </style>

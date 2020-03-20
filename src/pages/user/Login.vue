@@ -57,7 +57,7 @@
         </q-card-actions>
         <div class="row justify-between">
           <q-btn size="md" class="col-4" flat color="red">忘记密码？</q-btn>
-          <q-btn size="md" class="col-4" flat color="red" to="/register">没有账号？注册一个</q-btn>
+          <q-btn size="md" class="col-4" flat color="red" :to="{ name:'register' }">没有账号？注册一个</q-btn>
         </div>
       </q-form>
     </q-card>
@@ -147,7 +147,7 @@ export default {
         });
       } else if (data.code === 10005) {
         this.$q.notify({
-          message: "验证码过期",
+          message: data.msg,
           color: "negative",
           icon: "error"
         });
