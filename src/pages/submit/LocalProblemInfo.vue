@@ -294,7 +294,6 @@ export default {
         this.$q.notify({
           message: "50个字符都不给我",
           caption: "假代码，拒绝评测！哼",
-          icon: "error",
           color: "negative"
         });
       } else {

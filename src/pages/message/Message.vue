@@ -204,7 +204,7 @@ export default {
           message: "设置成功！",
           caption: `# ${id} 的消息已被设置为 ${statusStr}`,
           color: "positive",
-          icon: "done"
+
         });
         this.getMessage();
       }
@@ -220,7 +220,7 @@ export default {
             message: "设置成功！",
             caption: `共 ${data.datas[0]} 条消息已被设置为已读`,
             color: "positive",
-            icon: "done"
+
           });
           this.getMessage();
         } else {
@@ -228,7 +228,6 @@ export default {
             message: "已完成",
             caption: `全部消息均已读`,
             color: "warning",
-            icon: "done"
           });
         }
       }
@@ -243,7 +242,6 @@ export default {
           message: "删除成功！",
           caption: `# ${id} 的消息已被删除`,
           color: "positive",
-          icon: "done"
         });
         this.getMessage();
       }
@@ -258,7 +256,6 @@ export default {
             message: "删除成功！",
             caption: `共 ${data.datas[0]} 条未标记的消息已删除`,
             color: "positive",
-            icon: "done"
           });
           this.getMessage();
         } else {
@@ -266,7 +263,6 @@ export default {
             message: "已完成",
             caption: `全部未标记的消息已删除`,
             color: "warning",
-            icon: "done"
           });
         }
       }

@@ -113,9 +113,7 @@ export default {
     async getGuestToken() {
       if (!this.$store.getters["global/getIsLogin"]) {
         let data = await this.$axios.post("/user/guest/token");
-        console.log(data);
         this.$store.commit("global/setToken", data.datas[0]);
-        console.log(this.$store.getters["global/getToken"]);
         this.getCaptcha();
       }
     },
@@ -142,14 +140,12 @@ export default {
           message: "登录成功",
           caption: "欢迎回来，多做点题，水水讨论区，又是美好的一天",
           color: "positive",
-          icon: "done",
           timeout: 2000
         });
       } else if (data.code === 10005) {
         this.$q.notify({
           message: data.msg,
           color: "negative",
-          icon: "error"
         });
         this.getCaptcha();
       }

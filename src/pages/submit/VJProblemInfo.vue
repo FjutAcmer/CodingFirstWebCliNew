@@ -218,7 +218,6 @@ export default {
         this.$q.notify({
           message: "50个字符都不给我",
           caption: "假代码，拒绝评测！哼",
-          icon: "error",
           color: "negative"
         });
       } else {
@@ -230,7 +229,6 @@ export default {
         this.$q.notify({
           message: "选择评测语言",
           caption: "不选择评测语言我怎么评测呢？",
-          icon: "error",
           color: "negative"
         });
         return;

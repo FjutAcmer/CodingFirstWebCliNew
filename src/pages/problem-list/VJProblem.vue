@@ -210,7 +210,6 @@ export default {
             "YYYY-MM-DD HH:mm:ss"
           )}`,
           color: "positive",
-          icon: "check"
         });
       } else {
         this.$q.notify({
@@ -220,7 +219,6 @@ export default {
             "YYYY-MM-DD HH:mm:ss"
           )}`,
           color: "negative",
-          icon: "error"
         });
       }
       this.loading = false;
