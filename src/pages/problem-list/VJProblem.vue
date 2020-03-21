@@ -1,11 +1,9 @@
 <template>
   <q-page>
-    <q-banner
-      class="text-white bg-positive"
-    >TIP：Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等，因为有可能是他们服务器压力太大</q-banner>
+    <q-banner class="text-white bg-positive">TIP：Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等</q-banner>
     <q-banner
       class="text-white bg-warning"
-    >WARN：为了缓解对Virtual Judge的持续访问压力（防止IP被ban），所有近期被访问过的题目会在我们服务器上缓存15分钟，如果出现奇怪的错误，请到VJ源地址查看是否对应</q-banner>
+    >WARN：为了加强用户体验（不会那么卡），所有近期被访问过的题目会在本地服务器上缓存7天，如果出现奇怪的错误，请到VJ源地址查看题目是否最新</q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-orange">
         <div class="text-h6 text-white">
@@ -178,7 +176,7 @@ export default {
     },
     // 获取OJ列表
     async getOJs() {
-      let data = await this.$axios.get("/vj/util/ojs");
+      let data = await this.$axios.post("/vj/util/ojs");
       let OJs = data.datas[0];
       this.OJs.push("All");
       for (let key in OJs) {
@@ -209,7 +207,7 @@ export default {
             data.datas[1],
             "YYYY-MM-DD HH:mm:ss"
           )}`,
-          color: "positive",
+          color: "positive"
         });
       } else {
         this.$q.notify({
@@ -218,7 +216,7 @@ export default {
             data.datas[1],
             "YYYY-MM-DD HH:mm:ss"
           )}`,
-          color: "negative",
+          color: "negative"
         });
       }
       this.loading = false;

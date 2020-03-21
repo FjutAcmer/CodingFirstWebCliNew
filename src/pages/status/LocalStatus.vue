@@ -118,9 +118,9 @@
               >{{scope.row.language}}</q-btn>
             </template>
           </el-table-column>
+          <el-table-column prop="codeLength" label="代码长" min-width="6%"></el-table-column>
           <el-table-column prop="timeUsed" label="耗时" min-width="8%"></el-table-column>
           <el-table-column prop="memoryUsed" label="使用内存" min-width="8%"></el-table-column>
-          <el-table-column prop="codeLength" label="代码长" min-width="6%"></el-table-column>
           <el-table-column prop="submitTime" label="提交时间" min-width="14%">
             <template slot-scope="scope">
               <span class="text-black">{{formatDate(scope.row.submitTime)}}</span>

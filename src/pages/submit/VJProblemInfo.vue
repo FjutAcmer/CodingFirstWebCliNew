@@ -263,9 +263,9 @@ export default {
             }
           })
           .onOk(() => {
-            // this.$router.push({
-            //   name: "localStatus"
-            // });
+            this.$router.push({
+              name: "VJStatus"
+            });
           });
       } else if (data.code === 10004) {
         this.$q.notify({
@@ -280,11 +280,11 @@ export default {
       this.$q.loading.hide();
     },
     async getCaptcha() {
-      // let params = new URLSearchParams();
-      // params.append("username", this.$store.getters["global/getUsername"]);
-      // let data = await this.$axios.post("/vj/util/captcha", params);
-      // console.log(data)
-      // this.captchaUrl = data.datas[0];
+      let params = new URLSearchParams();
+      params.append("username", this.$store.getters["global/getUsername"]);
+      let data = await this.$axios.post("/vj/util/captcha", params);
+
+      this.captchaUrl = process.env.API + data.datas[0];
     },
     async getProblemInfo() {
       let params = new URLSearchParams();
@@ -300,7 +300,7 @@ export default {
     // 拿到这个OJ对应的可提交语言集
     async getLanguages() {
       let params = new URLSearchParams();
-      let data = await this.$axios.get("/vj/util/ojs", params);
+      let data = await this.$axios.post("/vj/util/ojs", params);
       let OJs = data.datas[0];
       this.languages = [];
       let OJId = this.$route.query.OJId;
