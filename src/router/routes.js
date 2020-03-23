@@ -94,6 +94,14 @@ const routes = [
         }
       },
       {
+        path: "result/vj",
+        name: "VJResult",
+        component: () => import("pages/result/VJResult.vue"),
+        meta: {
+          title: "评测详情"
+        }
+      },
+      {
         path: "user/login",
         name: "login",
         component: () => import("pages/user/Login.vue"),

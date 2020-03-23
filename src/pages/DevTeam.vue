@@ -101,6 +101,16 @@
               </q-item-label>
             </q-item-section>
           </q-item>
+          <q-item clickable v-ripple>
+            <q-item-section>
+              <q-item-label>
+                <div class="text-h5">场外援助</div>
+              </q-item-label>
+              <q-item-label caption>
+                <div class="text-h6">魏惠新</div>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
         </q-list>
       </q-card-section>
     </q-card>

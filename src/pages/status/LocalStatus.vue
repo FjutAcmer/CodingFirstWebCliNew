@@ -211,10 +211,16 @@ export default {
         return "positive";
       } else if (str === "Presentation Error") {
         return "warning";
-      } else if (str === "Pending..." || str === "Judging...") {
+      } else if (
+        str === "Pending..." ||
+        str === "Judging..." ||
+        str === "Running..."
+      ) {
         return "grey";
-      } else if (str === "Submit Error" || str.substring(0, 5) === "Score") {
+      } else if (str.substring(0, 5) === "Score") {
         return "blue";
+      } else if (str === "Submit Error") {
+        return "secondary";
       } else {
         return "negative";
       }

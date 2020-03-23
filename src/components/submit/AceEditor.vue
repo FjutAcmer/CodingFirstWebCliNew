@@ -125,11 +125,13 @@ export default {
       this.$emit("input", this.aceEditor.getValue());
     },
     handleModelPathChange(language) {
-      for (let i = 0; i < modeArray.length; i++) {
-        if (language.toLowerCase() === modeArray[i].name.toLowerCase()) {
-          this.modePath = modeArray[i].path;
-          this.aceEditor.getSession().setMode(this.modePath);
-          break;
+      if (language) {
+        for (let i = 0; i < modeArray.length; i++) {
+          if (language.toLowerCase() === modeArray[i].name.toLowerCase()) {
+            this.modePath = modeArray[i].path;
+            this.aceEditor.getSession().setMode(this.modePath);
+            break;
+          }
         }
       }
     }

@@ -113,6 +113,7 @@
               <q-input
                 v-model="data.captcha"
                 label="请输入验证码"
+                outlined
                 :rules="[
               val => val !== null && val !== '' || '请输入验证码',
               val => /^\w+$/.test(val) || '请输入数字、字母']"

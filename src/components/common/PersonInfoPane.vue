@@ -23,11 +23,10 @@
       </div>
       <q-separator vertical inset class="q-mx-lg" />
       <div class="column items-center">
-        <q-avatar size="72px">
+        <q-avatar size="84px">
           <img :src="this.$store.getters['global/getPrivateInfo'].avatarUrl" />
         </q-avatar>
-
-        <div class="text-h6 q-mt-md q-mb-xs">{{this.$store.getters['global/getUsername']}}</div>
+        <div class="text-h6 q-mt-sm q-mb-xs">{{this.$store.getters['global/getUsername']}}</div>
         <q-btn color="primary" label="退出登录" glossy push size="md" @click="doLogOut()" />
       </div>
     </div>
@@ -58,7 +57,7 @@ export default {
         });
     },
     async logout() {
-      let params =  new URLSearchParams();
+      let params = new URLSearchParams();
       params.append("username", this.$store.getters["global/getUsername"]);
       await this.$axios.post("/user/logout", params);
       this.$store.commit("global/logout");

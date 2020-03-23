@@ -235,15 +235,14 @@ export default {
       } else if (str === "Presentation Error") {
         return "warning";
       } else if (
-        str === "Submit Failed" ||
-        str === "Queuing" ||
-        str === "In judge queue"
+        str === "Pending" ||
+        str === "Running" ||
+        str === "Submitted"
       ) {
+        return "blue";
+      } else if (str === "Queuing" || str === "In judge queue") {
         return "grey";
-      }
-      // } else if (str === "Submit Error" || str.substring(0, 5) === "Score") {
-      //   return "blue";
-      else {
+      } else {
         return "negative";
       }
     },

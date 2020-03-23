@@ -39,7 +39,7 @@
             </template>
           </q-input>
 
-          <div class="row q-gutter-x-md">
+          <!-- <div class="row q-gutter-x-md">
             <img @click="getCaptcha()" class="captcha-img" :src="captchaUrl" alt="验证码" />
             <q-input
               v-model="data.captcha"
@@ -48,7 +48,7 @@
               val => val !== null && val !== '' || '请输入验证码',
               val => /^\w+$/.test(val) || '请输入数字、字母']"
             ></q-input>
-          </div>
+          </div> -->
           <q-checkbox v-model="rememberPwd" label="记住密码（请确保是本人的电脑）" />
         </q-card-section>
         <q-card-actions align="around">
@@ -125,7 +125,7 @@ export default {
       let params = new URLSearchParams({
         username: this.data.loginName,
         password: this.data.loginPwd,
-        captcha: this.data.captcha
+        // captcha: this.data.captcha
       });
       let data = await this.$axios.post("/user/login", params).catch(() => {
         this.btnLoading = false;
