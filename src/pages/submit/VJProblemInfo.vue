@@ -276,7 +276,6 @@ export default {
         this.needCaptcha = true;
         this.captchaUrl = process.env.API + data.datas[0];
       }
-      console.log(data);
       this.$q.loading.hide();
     },
     async getCaptcha() {

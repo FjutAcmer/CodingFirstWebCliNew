@@ -52,6 +52,11 @@ module.exports = function(ctx) {
           color: "secondary",
           size: "10px",
           position: "bottom"
+        },
+        loading: {
+          spinnerColor: "primary",
+          messageColor: "white",
+          backgroundColor: "grey"
         }
       }
     },
