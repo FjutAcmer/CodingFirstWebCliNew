@@ -171,9 +171,19 @@ export default {
     };
   },
   mounted() {
+    if (this.$q.cookies.has("page-local-status-filter")) {
+      this.filter = this.$q.cookies.get("page-local-status-filter");
+    }
+    if (this.$q.cookies.has("page-local-status-pagination")) {
+      this.pagination = this.$q.cookies.get("page-local-status-pagination");
+    }
     this.getResultOptions();
     this.getLanguageOptions();
     this.getStatus();
+  },
+  destroyed() {
+    this.$q.cookies.set("page-local-status-filter", this.filter);
+    this.$q.cookies.set("page-local-status-pagination", this.pagination);
   },
   methods: {
     toLocalProblem(probId) {

@@ -193,9 +193,19 @@ export default {
     };
   },
   mounted() {
+    if (this.$q.cookies.has("page-vj-status-filter")) {
+      this.filter = this.$q.cookies.get("page-vj-status-filter");
+    }
+    if (this.$q.cookies.has("page-vj-status-pagination")) {
+      this.pagination = this.$q.cookies.get("page-vj-status-pagination");
+    }
     this.getResultOptions();
     this.getLanguageOptions();
     this.getStatus();
+  },
+  destroyed() {
+    this.$q.cookies.set("page-vj-status-filter", this.filter);
+    this.$q.cookies.set("page-vj-status-pagination", this.pagination);
   },
   methods: {
     toVJProblem(OJId, probNum) {

@@ -154,8 +154,18 @@ export default {
     };
   },
   mounted() {
+    if (this.$q.cookies.has("page-vj-problem-filter")) {
+      this.filter = this.$q.cookies.get("page-vj-problem-filter");
+    }
+    if (this.$q.cookies.has("page-vj-problem-pagination")) {
+      this.pagination = this.$q.cookies.get("page-vj-problem-pagination");
+    }
     this.getVJProblem();
     this.getOJs();
+  },
+  destroyed() {
+    this.$q.cookies.set("page-vj-problem-filter", this.filter);
+    this.$q.cookies.set("page-vj-problem-pagination", this.pagination);
   },
   methods: {
     cleanFilter() {

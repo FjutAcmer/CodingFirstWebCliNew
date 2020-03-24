@@ -86,6 +86,9 @@ export default {
   left: 20px;
   bottom: 20px;
   .robot-img {
+    &:hover {
+      cursor: pointer;
+    }
     width: 150px;
     height: 150px;
   }

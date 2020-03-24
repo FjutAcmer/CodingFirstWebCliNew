@@ -182,8 +182,18 @@ export default {
     };
   },
   mounted() {
+    if (this.$q.cookies.has("page-local-problem-filter")) {
+      this.filter = this.$q.cookies.get("page-local-problem-filter");
+    }
+    if (this.$q.cookies.has("page-local-problem-pagination")) {
+      this.pagination = this.$q.cookies.get("page-local-problem-pagination");
+    }
     this.getProblem();
     this.getProblemTags();
+  },
+  destroyed() {
+    this.$q.cookies.set("page-local-problem-filter", this.filter);
+    this.$q.cookies.set("page-local-problem-pagination", this.pagination);
   },
   methods: {
     openBugReport() {

@@ -98,12 +98,9 @@ export default {
         return "grey";
       } else if (str.substring(0, 5) === "Score") {
         return "blue";
-      }
-      else if(str==="Submit Error")
-      {
-        return "secondary"
-      }
-      else {
+      } else if (str === "Submit Error") {
+        return "secondary";
+      } else {
         return "negative";
       }
     },
