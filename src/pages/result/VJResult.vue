@@ -53,7 +53,7 @@
             </q-btn>
           </div>
           <div class="row q-gutter-x-md">
-            <pre class="text-subtitle2 shadow-2 q-pa-sm">{{resultData.additionalInfo}}</pre>
+            <pre class="text-subtitle2 shadow-2 q-pa-sm">{{resultData.additionalInfo?resultData.additionalInfo:"没有额外的反馈 :O"}}</pre>
           </div>
         </q-card-section>
         <q-separator />
@@ -110,7 +110,7 @@ export default {
     async getResult() {
       let params = new URLSearchParams();
       params.append("id", this.$route.query.id);
-      let data = await this.$axios.post("/vj/judgeResult/info", params);
+      let data = await this.$axios.post("/vj/judge_result/info", params);
       this.resultData = data.datas[0];
       // 获取完基本信息后获取用户的个性化信息
       this.getUserCustomInfo();

@@ -244,7 +244,7 @@ export default {
       params.append("source", this.data.code);
       params.append("captcha", this.data.captcha);
       let data = await this.$axios
-        .post("/vj/judgeResult/submit", params)
+        .post("/vj/judge_result/submit", params)
         .catch(() => {
           this.$q.loading.hide();
         });
@@ -296,6 +296,25 @@ export default {
     },
     async getUserSolved() {
       // TODO：获取用户在VJ上的解答情况
+      let params = new URLSearchParams();
+      params.append("probNum", this.$route.query.ProbNum);
+      params.append("OJId", this.$route.query.OJId);
+      params.append("username", this.$store.getters["global/getUsername"]);
+      let data = await this.$axios.post("/vj/problem/user_solved", params);
+      if (data.datas[0].length === 0) {
+        this.userSolved = {
+          id: "",
+          username: "",
+          ojId: "",
+          probNum: "",
+          tryCount: 0,
+          solvedCount: 0,
+          lastTryTime: "",
+          firstSolvedTime: ""
+        };
+      } else {
+        this.userSolved = data.datas[0];
+      }
     },
     // 拿到这个OJ对应的可提交语言集
     async getLanguages() {

@@ -110,7 +110,7 @@ export default {
     async getResult() {
       let params = new URLSearchParams();
       params.append("judgeId", this.$route.query.id);
-      let data = await this.$axios.post("/judgeResult/info", params);
+      let data = await this.$axios.post("/judge_result/info", params);
       this.result = data.datas[0];
       this.status = data.datas[1];
       // 获取完基本信息后获取用户的个性化信息

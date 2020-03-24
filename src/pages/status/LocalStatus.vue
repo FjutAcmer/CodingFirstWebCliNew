@@ -239,7 +239,7 @@ export default {
       params.append("result", this.filter.searchResult);
       params.append("username", this.$store.getters["global/getUsername"]);
       let data = await this.$axios
-        .get("/judgeStatus/list", params)
+        .get("/judge_status/list", params)
         .catch(() => {
           this.loading = false;
         });

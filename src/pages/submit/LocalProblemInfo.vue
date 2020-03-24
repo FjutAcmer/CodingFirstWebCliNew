@@ -310,7 +310,7 @@ export default {
       params.append("language", this.data.language);
       params.append("username", this.$store.getters["global/getUsername"]);
       let data = await this.$axios
-        .post("/judgeStatus/submit", params)
+        .post("/judge_status/submit", params)
         .catch(() => {
           this.$q.loading.hide();
         });

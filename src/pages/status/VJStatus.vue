@@ -260,7 +260,7 @@ export default {
       params.append("result", this.filter.searchResult);
       params.append("username", this.$store.getters["global/getUsername"]);
       let data = await this.$axios
-        .post("/vj/judgeResult/list", params)
+        .post("/vj/judge_result/list", params)
         .catch(() => {
           this.loading = false;
         });
