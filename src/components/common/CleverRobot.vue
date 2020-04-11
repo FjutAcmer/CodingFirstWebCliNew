@@ -23,7 +23,7 @@ export default {
       showRobot: true,
       showText: true,
       text: "你好，我是敢敢，不智能的智能机器人",
-      robotUrl: "https://i.loli.net/2019/12/13/TnkKVyBZjA8aLc7.gif"
+      robotUrl: "https://i.loli.net/2019/12/13/xkumjFATie7MOgs.png"
     };
   },
   watch: {

@@ -90,7 +90,7 @@ export default {
     this.data.loginPwd = this.$q.cookies.has("loginPwd")
       ? this.$q.cookies.get("loginPwd")
       : this.data.loginPwd;
-    this.getGuestToken();
+    // this.getGuestToken();
   },
   methods: {
     onSubmit() {
