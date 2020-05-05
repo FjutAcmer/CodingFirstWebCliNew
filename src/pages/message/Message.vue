@@ -136,7 +136,7 @@
 
 <script>
 import { date } from "quasar";
-import ShowMessage from "components/message/ShowMessage";
+import ShowMessage from "./components/ShowMessage";
 export default {
   data() {
     return {

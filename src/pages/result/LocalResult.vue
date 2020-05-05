@@ -66,7 +66,7 @@
 
 <script>
 import { date } from "quasar";
-import AceEditor from "components/submit/AceEditor.vue";
+import AceEditor from "components/common/AceEditor.vue";
 export default {
   components: {
     AceEditor

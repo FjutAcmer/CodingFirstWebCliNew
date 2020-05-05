@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import AceEditor from "components/submit/AceEditor";
+import AceEditor from "components/common/AceEditor";
 import { date } from "quasar";
 import { Icon } from "element-ui";
 export default {
