@@ -78,8 +78,8 @@
 </template>
 
 <script>
-import PersonInfoPane from "components/common/PersonInfoPane";
-import CleverRobot from "components/common/CleverRobot";
+import PersonInfoPane from "./components/PersonInfoPane";
+import CleverRobot from "./components/CleverRobot";
 import BugReport from "components/common/BugReport";
 export default {
   components: {

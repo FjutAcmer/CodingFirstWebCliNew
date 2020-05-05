@@ -136,7 +136,7 @@ const routes = [
       {
         path: "project-introduction",
         name: "projectIntroduction",
-        component: () => import("pages/ProjectIntroduction.vue"),
+        component: () => import("pages/footer/Introduction.vue"),
         meta: {
           title: "项目简介"
         }
@@ -144,7 +144,7 @@ const routes = [
       {
         path: "develop-log",
         name: "devLog",
-        component: () => import("pages/DevLog.vue"),
+        component: () => import("pages/footer/DevLog.vue"),
         meta: {
           title: "开发日志"
         }
@@ -152,14 +152,14 @@ const routes = [
       {
         path: "develop-team",
         name: "devTeam",
-        component: () => import("pages/DevTeam.vue"),
+        component: () => import("pages/footer/DevTeam.vue"),
         meta: {
           title: "开发团队"
         }
       },
       {
         path: "*",
-        component: () => import("pages/Error404.vue"),
+        component: () => import("pages/error-page/Error404.vue"),
         meta: {
           title: "页面不存在"
         }
@@ -172,7 +172,7 @@ const routes = [
 if (process.env.MODE !== "ssr") {
   routes.push({
     path: "*",
-    component: () => import("pages/Error404.vue")
+    component: () => import("pages/error-page/Error404.vue")
   });
 }
 
