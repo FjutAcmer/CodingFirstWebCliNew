@@ -45,7 +45,7 @@ axios.interceptors.response.use(
         // 退出登录
         store.default.commit("global/logout");
         // 返回登录页面
-        store.default.$router.push("login");
+        store.default.$router.push("/user/login");
       });
     } else if (res.data.code === 30001) {
       Notify.create({
