@@ -3,12 +3,24 @@
     <q-header class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar color="light-blue">
-            CF
-            <!-- <img src="https://i.loli.net/2020/03/02/hzBesEd89T42JUL.png" /> -->
-          </q-avatar>&emsp;一码当先 | CodingFirst
+          <q-avatar color="light-blue">CF</q-avatar>&emsp;一码当先 | CodingFirst
         </q-toolbar-title>
         <q-space />
+        <q-input
+          @keydown.enter.native="doSearch()"
+          dark
+          dense
+          standout
+          v-model="searchText"
+          input-class="text-right"
+          class="q-mx-md"
+          label="输入你想搜索的内容"
+        >
+          <template v-slot:append>
+            <q-icon v-if="searchText === ''" name="search" />
+            <q-icon v-else name="clear" class="cursor-pointer" @click="searchText = ''" />
+          </template>
+        </q-input>
         <div v-if="!this.$store.getters['global/getIsLogin']">
           <q-tabs inline-label>
             <q-route-tab icon="person_add" :to="{ name:'register' }" label="注册" />
@@ -87,7 +99,9 @@ export default {
     CleverRobot
   },
   data() {
-    return {};
+    return {
+      searchText: ""
+    };
   },
   computed: {
     fullNickname() {
@@ -98,6 +112,12 @@ export default {
     }
   },
   methods: {
+    doSearch() {
+      this.$q.notify({
+        message: "暂不支持全站搜索",
+        type: "warning"
+      });
+    },
     toBeian() {
       window.open("http://www.beian.miit.gov.cn/");
     },
