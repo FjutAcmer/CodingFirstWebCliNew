@@ -13,29 +13,26 @@ axios.interceptors.response.use(
       Notify.create({
         message: "资源不存在",
         caption: "请求的资源不存在",
-        type: "negative",
-        icon: "error"
+        type: "negative"
       });
     } else if (res.data.code === 20001) {
       Notify.create({
         message: "未登录",
         caption: "您未登录，请登录后再行操作",
-        type: "negative",
-        icon: "error"
+        type: "negative"
       });
     } else if (res.data.code === 20002) {
       Notify.create({
         message: "权限不足",
         caption: "权限不足，请联系管理员",
-        type: "negative",
-        icon: "error"
+        type: "negative"
       });
     } else if (res.data.code === 20003) {
       Dialog.create({
         title: "认证过期",
         message:
           "您的认证已过期，可能已在其他地方登录，如果您有疑问，请联系管理员",
-        type: "negative",
+        color: "negative",
         icon: "error",
         ok: {
           label: "重新登录"
@@ -51,15 +48,13 @@ axios.interceptors.response.use(
       Notify.create({
         message: "操作失败",
         caption: res.data.msg,
-        type: "negative",
-        icon: "error"
+        type: "negative"
       });
     } else if (res.data.code === 30002) {
       Notify.create({
         message: "服务端异常",
         caption: res.data.msg,
-        type: "negative",
-        icon: "error"
+        type: "negative"
       });
     } else {
       return res;

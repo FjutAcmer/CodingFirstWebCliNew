@@ -44,9 +44,9 @@ module.exports = function(ctx) {
       plugins: ["Notify", "LoadingBar", "Dialog", "Cookies", "Loading"],
       config: {
         notify: {
-          position: "top-right",
+          position: "top",
           timeout: "4000",
-          classes: "q-mt-xl"
+          classes: "q-mt-sm"
         },
         loadingBar: {
           color: "secondary",

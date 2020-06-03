@@ -79,7 +79,7 @@
             <div v-html="blockDetail.des"></div>
           </q-card-section>
         </q-card>
-        <q-card class="q-ma-sm bg-grey-2">
+        <q-card v-if="blockDetail.condition" class="q-ma-sm bg-grey-2">
           <q-card-section class="bg-blue">
             <div class="text-white text-h6">开启条件</div>
           </q-card-section>

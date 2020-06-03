@@ -102,20 +102,10 @@ export default {
       window.open("http://www.beian.miit.gov.cn/");
     },
     openBugReport() {
-      this.$q
-        .dialog({
-          component: BugReport,
-          parent: this
-        })
-        .onOk(() => {
-          // alert("ok");
-        })
-        .onCancel(() => {
-          // alert("cancel");
-        })
-        .onDismiss(() => {
-          // alert("called on ok or cancel");
-        });
+      this.$q.dialog({
+        component: BugReport,
+        parent: this
+      });
     }
   }
 };

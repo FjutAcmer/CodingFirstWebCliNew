@@ -12,7 +12,7 @@ const routes = [
       {
         path: "",
         name: "index",
-        component: () => import("pages/Index.vue"),
+        component: () => import("pages/index/Index.vue"),
         meta: {
           title: "主页"
         }

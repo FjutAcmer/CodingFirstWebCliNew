@@ -65,7 +65,6 @@ export default {
         message: "已退出登录",
         caption: "你已退出登录，欢迎再次回来哦",
         type: "warning",
-
         timeout: 2000
       });
       this.$router.push("/");
