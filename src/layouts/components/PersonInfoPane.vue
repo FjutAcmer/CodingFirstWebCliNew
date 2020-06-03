@@ -64,8 +64,8 @@ export default {
       this.$q.notify({
         message: "已退出登录",
         caption: "你已退出登录，欢迎再次回来哦",
-        color: "warning",
-        icon: "warning",
+        type: "warning",
+
         timeout: 2000
       });
       this.$router.push("/");

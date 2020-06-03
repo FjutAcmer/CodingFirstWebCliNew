@@ -219,13 +219,13 @@ export default {
         this.$q.notify({
           message: "账号注册成功！",
           caption: "现在快登录一下吧！",
-          color: "positive"
+          type: "positive"
         });
         this.$router.push({ name: "index" });
       } else if (data.code === 10005) {
         this.$q.notify({
           message: data.msg,
-          color: "negative"
+          type: "negative"
         });
         this.getCaptcha();
       }

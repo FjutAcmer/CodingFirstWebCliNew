@@ -89,14 +89,14 @@ export default {
       if (data.code === 10000) {
         this.$q.notify({
           icon: "check",
-          color: "positive",
+          type: "positive",
           message: "BUG提交成功",
           caption: "如果不是匿名提交的，可以留意系统消息哦"
         });
       } else {
         this.$q.notify({
           icon: "error",
-          color: "negative",
+          type: "negative",
           message: "BUG提交失败",
           caption: "请稍后重试"
         });

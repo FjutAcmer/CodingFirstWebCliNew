@@ -28,24 +28,24 @@ export default {
     });
   },
   mounted() {
-    this.$q.notify({
-      position: "bottom-right",
-      html: true,
-      timeout: 0,
-      message: "我们使用Cookie来增强用户体验",
-      caption:
-        "Cookie内不会保存敏感信息，如有需要，<br/>登录后后进入系统设置清除Cookie",
-      color: "grey",
-      actions: [
-        {
-          label: "明白了",
-          color: "white",
-          handler: () => {
-            /* ... */
-          }
-        }
-      ]
-    });
+    // this.$q.notify({
+    //   position: "bottom-right",
+    //   html: true,
+    //   timeout: 0,
+    //   message: "我们使用Cookie来增强用户体验",
+    //   caption:
+    //     "Cookie内不会保存敏感信息，如有需要，<br/>登录后后进入系统设置清除Cookie",
+    //   color: "grey",
+    //   actions: [
+    //     {
+    //       label: "明白了",
+    //       color: "white",
+    //       handler: () => {
+    //         /* ... */
+    //       }
+    //     }
+    //   ]
+    // });
   },
   methods: {
     // 获取用户的未读消息数量

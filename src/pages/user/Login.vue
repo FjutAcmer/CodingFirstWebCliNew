@@ -48,7 +48,7 @@
               val => val !== null && val !== '' || '请输入验证码',
               val => /^\w+$/.test(val) || '请输入数字、字母']"
             ></q-input>
-          </div> -->
+          </div>-->
           <q-checkbox v-model="rememberPwd" label="记住密码（请确保是本人的电脑）" />
         </q-card-section>
         <q-card-actions align="around">
@@ -124,7 +124,7 @@ export default {
     async doLogin() {
       let params = new URLSearchParams({
         username: this.data.loginName,
-        password: this.data.loginPwd,
+        password: this.data.loginPwd
         // captcha: this.data.captcha
       });
       let data = await this.$axios.post("/user/login", params).catch(() => {
@@ -139,13 +139,13 @@ export default {
         this.$q.notify({
           message: "登录成功",
           caption: "欢迎回来，多做点题，水水讨论区，又是美好的一天",
-          color: "positive",
+          type: "positive",
           timeout: 2000
         });
       } else if (data.code === 10005) {
         this.$q.notify({
           message: data.msg,
-          color: "negative",
+          type: "negative"
         });
         this.getCaptcha();
       }

@@ -56,6 +56,9 @@ export default {
         case "localSubmit":
           this.showRobot = false;
           break;
+        case "ChallengeDetail":
+          this.showRobot = false;
+          break;
         default:
           this.showRobot = true;
           this.text = "好无聊啊，我什么时候才能变聪明";

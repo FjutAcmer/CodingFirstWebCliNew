@@ -119,25 +119,9 @@
           </div>
         </div>
         <div v-else>
-          <div class="q-ml-md" style="width: 90% ">
-            <q-chat-message :text="['龟龟，为什么我不能答题？']" sent />
-            <q-chat-message :text="['因为你莫得登录了啦']" />
-            <q-chat-message :text="['那我要咋整啊']" sent />
-            <q-chat-message :text="['有账号不啦？']" />
-            <q-chat-message :text="['木有']" sent />
-            <q-chat-message :text="['注册一个，晓得不，那就能答题辽']" />
-            <q-chat-message :text="['要得要得，那在哪注册呢？']" sent />
-            <q-chat-message>
-              点
-              <q-btn @click="toRegister()" outline>注册</q-btn>喽，很快的，不耽误你几分钟
-            </q-chat-message>
-            <q-chat-message :text="['注册完了捏？']" sent />
-            <q-chat-message>
-              点
-              <q-btn @click="toLogin()" outline>登录</q-btn>喽,
-              登录完可以有更多玩法了啦
-            </q-chat-message>
-            <q-chat-message :text="['好的好的，明白辽']" sent />
+          <div class="q-ma-md">
+            <q-btn @click="toLogin()" outline>登录</q-btn>后才能作答，如果没有账号，请
+            <q-btn @click="toRegister()" outline>注册</q-btn>一个
           </div>
         </div>
       </template>
@@ -176,6 +160,8 @@ export default {
     this.getLanguages();
     if (this.$store.getters["global/getIsLogin"]) {
       this.getUserSolved();
+    } else {
+      this.splitterModel = 70;
     }
   },
   methods: {
@@ -218,7 +204,7 @@ export default {
         this.$q.notify({
           message: "50个字符都不给我",
           caption: "假代码，拒绝评测！哼",
-          color: "negative"
+          type: "negative"
         });
       } else {
         this.doSubmit();
@@ -229,7 +215,7 @@ export default {
         this.$q.notify({
           message: "选择评测语言",
           caption: "不选择评测语言我怎么评测呢？",
-          color: "negative"
+          type: "negative"
         });
         return;
       }
@@ -271,7 +257,7 @@ export default {
         this.$q.notify({
           message: "输入验证码",
           caption: "由于提交过多，VJ平台需要获取验证码",
-          color: "warning"
+          type: "warning"
         });
         this.needCaptcha = true;
         this.captchaUrl = process.env.API + data.datas[0];

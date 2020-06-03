@@ -217,7 +217,7 @@ export default {
             data.datas[1],
             "YYYY-MM-DD HH:mm:ss"
           )}`,
-          color: "positive"
+          type: "positive"
         });
       } else {
         this.$q.notify({
@@ -226,7 +226,7 @@ export default {
             data.datas[1],
             "YYYY-MM-DD HH:mm:ss"
           )}`,
-          color: "negative"
+          type: "negative"
         });
       }
       this.loading = false;

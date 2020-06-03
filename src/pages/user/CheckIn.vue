@@ -28,15 +28,17 @@
             <q-btn color="positive" size="lg" @click="checkIn()">点我签到</q-btn>
           </q-tab-panel>
           <q-tab-panel :name="date">
-            <div class="text-h5 q-mb-md">{{date}} 的签到状态：</div>
+            <div class="text-h5 q-mb-md">
+              {{date}}
+              的签到状态：
+            </div>
             <q-chip text-color="white" color="negative" class="text-subtitle1">当天你没有签到哦</q-chip>
           </q-tab-panel>
         </q-tab-panels>
       </div>
-
       <q-card class="col">
         <q-card-section>
-          <q-parallax src="https://cdn.quasar.dev/img/parallax2.jpg">
+          <q-parallax>
             <h3 class="text-white">神秘内容，敬请期待</h3>
           </q-parallax>
         </q-card-section>
@@ -89,7 +91,7 @@ export default {
         this.$q.notify({
           message: "签到成功",
           caption: "签到成功！今天又是美好的一天呢",
-          color: "positive"
+          type: "positive"
         });
       }
       this.getCheckIn();

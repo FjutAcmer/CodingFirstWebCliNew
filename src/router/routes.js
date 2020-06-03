@@ -102,6 +102,22 @@ const routes = [
         }
       },
       {
+        path: "challenge",
+        name: "Challenge",
+        component: () => import("pages/challenge/Challenge.vue"),
+        meta: {
+          title: "挑战模式"
+        }
+      },
+      {
+        path: "challenge/detail",
+        name: "ChallengeDetail",
+        component: () => import("pages/challenge/ChallengeDetail.vue"),
+        meta: {
+          title: "挑战模块"
+        }
+      },
+      {
         path: "user/login",
         name: "login",
         component: () => import("pages/user/Login.vue"),
