@@ -234,6 +234,8 @@ export default {
 
 <style lang="scss" scoped>
 .row {
+  width: 95%;
+  margin: auto;
   .left-body {
     width: 65%;
     .el-table {
