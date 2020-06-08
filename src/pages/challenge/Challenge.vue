@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-banner class="row text-white bg-positive">TIP：本地渲染，机器不好加载会比较慢哦</q-banner>
+    <!-- <q-banner class="row text-white bg-positive">TIP：本地渲染，机器不好加载会比较慢哦</q-banner> -->
     <div class="row">
       <q-space />
       <q-card class="my-card q-ma-md bg-grey-2">

@@ -9,7 +9,9 @@
       <q-btn color="negative" size="md" @click="shutdownRobot()">点我消灭机器人</q-btn>
     </div>
     <div v-else>
-      <q-tooltip anchor="top right" self="top bottom">点我召唤敢敢</q-tooltip>
+      <q-tooltip anchor="top right" self="top bottom">
+        <div class="text-subtitle2">点我召唤敢敢</div>
+      </q-tooltip>
       <q-btn color="secondary" round icon="chat" @click="openRobot()"></q-btn>
     </div>
   </div>
