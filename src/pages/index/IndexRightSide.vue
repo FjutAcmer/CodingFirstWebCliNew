@@ -82,7 +82,7 @@
         </div>
       </q-card-section>
       <q-card-section class="text-body">排行榜</q-card-section>
-    </q-card> -->
+    </q-card>-->
   </div>
 </template>
 
@@ -127,6 +127,7 @@ export default {
 <style lang="scss" scoped>
 .border-level-one {
   color: darkcyan;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
   }
@@ -134,6 +135,7 @@ export default {
 
 .border-level-two {
   color: blue;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
   }
@@ -141,6 +143,7 @@ export default {
 
 .border-level-three {
   color: #ff0080;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
   }
@@ -148,6 +151,7 @@ export default {
 
 .border-level-four {
   color: #ff0000;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
   }
@@ -155,6 +159,7 @@ export default {
 
 .border-level-five {
   color: #ff8000;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
   }
