@@ -39,6 +39,10 @@ export default {
         },
         {
           name: "3",
+          text: "其实还有很多BUG没修，要死了要死了"
+        },
+        {
+          name: "4",
           text: "现任开发团队：吴宇翔 钟美林"
         }
       ]
