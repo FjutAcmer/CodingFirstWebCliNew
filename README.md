@@ -27,7 +27,9 @@ npm install
 npm run dev
 ```
 
-## 部署教程（在 CentOS7 操作系统下）
+## 部署教程
+
+> 需在 CentOS7 操作系统下，其他操作系统类似
 
 1. 在服务器中安装好 Docker、NodeJS 等必要环境
 2. 手动运行项目根目录下的 deploy.sh（也可以采用 jenkins 自动化构建）
