@@ -1,4 +1,4 @@
-# 暂不支持自动化部署，等待进一步更新
+# 以支持全自动部署
 npm install
 npm run build
 sudo docker pull nginx
