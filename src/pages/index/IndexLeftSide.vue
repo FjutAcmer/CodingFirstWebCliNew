@@ -3,7 +3,7 @@
     <q-card class="q-ma-sm">
       <q-card-section class="bg-blue">
         <div class="text-body1 text-white">
-          <q-icon name="notifications"></q-icon>全站公告
+          <q-icon name="notifications"></q-icon>全站公告-自动化构建测试
         </div>
       </q-card-section>
       <q-card-section class="text-body">
