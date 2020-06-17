@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-space></q-space>
+    <br />
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">
