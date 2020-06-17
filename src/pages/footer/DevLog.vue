@@ -30,16 +30,16 @@ export default {
     return {
       info: [
         {
-          name: "Web后端项目",
-          url: "https://github.com/axiangcoding/CodingFirstApiSys"
+          name: "一码当先项目总览（码云）",
+          url: "https://gitee.com/FJUTCodingFirst"
         },
         {
-          name: "Web前端项目",
-          url: "https://github.com/axiangcoding/CodingFirstWebCli"
+          name: "Web服务端项目",
+          url: "https://gitee.com/FJUTCodingFirst/CodingFirstApiSys"
         },
         {
-          name: "前端Demo（仅供页面展示）",
-          url: "https://axiangcoding.github.io/"
+          name: "Web客户端项目",
+          url: "https://gitee.com/FJUTCodingFirst/CodingFirstWebCliNew"
         }
       ]
     };
