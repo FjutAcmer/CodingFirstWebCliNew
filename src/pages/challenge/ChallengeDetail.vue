@@ -200,7 +200,6 @@ export default {
           ).toFixed(2)
         ) + "%";
     },
-
     async getBlockProblems() {
       this.loading = true;
       let params = new URLSearchParams();

@@ -280,7 +280,7 @@ export default {
                   });
               } else {
                 _this.$router.push({
-                  name: "ChallengeDetail",
+                  name: "challengeDetail",
                   query: { id: params.data.id }
                 });
               }

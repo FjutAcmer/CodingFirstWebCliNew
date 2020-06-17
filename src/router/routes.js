@@ -26,7 +26,7 @@ const routes = [
         },
         children: [
           {
-            path: "/",
+            path: "local",
             name: "localProblem",
             component: () => import("pages/problem-list/LocalProblem.vue"),
             meta: {
@@ -44,7 +44,7 @@ const routes = [
         ]
       },
       {
-        path: "submit",
+        path: "submit/local",
         name: "localSubmit",
         component: () => import("pages/submit/LocalSubmit.vue"),
         meta: {
@@ -68,7 +68,7 @@ const routes = [
         },
         children: [
           {
-            path: "/",
+            path: "local",
             name: "localStatus",
             component: () => import("pages/status/LocalStatus.vue"),
             meta: {
@@ -86,7 +86,7 @@ const routes = [
         ]
       },
       {
-        path: "result",
+        path: "result/local",
         name: "localResult",
         component: () => import("pages/result/LocalResult.vue"),
         meta: {
@@ -103,7 +103,7 @@ const routes = [
       },
       {
         path: "challenge",
-        name: "Challenge",
+        name: "challenge",
         component: () => import("pages/challenge/Challenge.vue"),
         meta: {
           title: "挑战模式"
@@ -111,11 +111,29 @@ const routes = [
       },
       {
         path: "challenge/detail",
-        name: "ChallengeDetail",
+        name: "challengeDetail",
         component: () => import("pages/challenge/ChallengeDetail.vue"),
         meta: {
           title: "挑战模块"
         }
+      },
+      {
+        path: "border",
+        name: "border",
+        component: () => import("layouts/BorderLayout.vue"),
+        meta: {
+          title: "排行榜"
+        },
+        children: [
+          {
+            path: "honor",
+            name: "honorBorder",
+            component: () => import("pages/border/HonorBorder.vue"),
+            meta: {
+              title: "本校荣誉榜"
+            }
+          }
+        ]
       },
       {
         path: "user/login",
@@ -181,6 +199,13 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: "*",
+    component: () => import("pages/error-page/Error404.vue"),
+    meta: {
+      title: "页面不存在"
+    }
   }
 ];
 

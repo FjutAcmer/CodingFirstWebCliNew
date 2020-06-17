@@ -58,7 +58,7 @@ export default {
         case "localSubmit":
           this.showRobot = false;
           break;
-        case "ChallengeDetail":
+        case "challengeDetail":
           this.showRobot = false;
           break;
         default:

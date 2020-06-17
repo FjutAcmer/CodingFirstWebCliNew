@@ -42,11 +42,11 @@
 
       <q-tabs active-color="gold" class="glossy" align="left" inline-label>
         <q-route-tab icon="home" to="/" label="主 页" />
-        <q-route-tab icon="menu" to="/problem-list" label="题 库" />
-        <q-route-tab icon="gavel" to="/status" label="评 测" />
+        <q-route-tab icon="menu" :to="{ name:'localProblem' }" label="题 库" />
+        <q-route-tab icon="gavel" :to="{ name:'localStatus' }" label="评 测" />
         <q-route-tab icon="receipt" to="/contest" label="比 赛" />
-        <q-route-tab icon="fitness_center" to="/challenge" label="挑 战" />
-        <q-route-tab icon="format_list_numbered" to="/border" label="排 名" />
+        <q-route-tab icon="fitness_center" :to="{ name:'challenge' }" label="挑 战" />
+        <q-route-tab icon="format_list_numbered" :to="{ name:'honorBorder' }" label="排 名" />
         <q-route-tab icon="chat_bubble" to="/discuss" label="讨 论" />
         <q-route-tab icon="store_mall_directory" to="/mall" label="商 城" />
       </q-tabs>
