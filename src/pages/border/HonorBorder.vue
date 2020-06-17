@@ -1,5 +1,6 @@
 <template>
   <q-page>
+    <q-space></q-space>
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">
@@ -27,7 +28,6 @@
           <el-table-column prop="awardLevel" label="奖项" width="150"></el-table-column>
           <el-table-column prop="description" label="备注"></el-table-column>
         </el-table>
-
         <div class="row">
           <q-space />
           <el-pagination
@@ -96,6 +96,5 @@ export default {
 .my-card {
   width: 95%;
   margin: auto;
-  margin-top: 20px;
 }
 </style>
