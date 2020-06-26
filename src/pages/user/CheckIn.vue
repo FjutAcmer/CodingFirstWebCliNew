@@ -2,9 +2,9 @@
   <q-page>
     <div class="q-ma-md row">
       <div class="q-pa-md">
-        <q-date today-btn v-model="date" :events="events" :options="optionsFn" event-color="green" />
+        <q-date today-btn v-model="date" :events="events" :options="optionsFn" event-color="green"/>
       </div>
-      <q-separator vertical inset />
+      <q-separator vertical inset/>
       <div style="width:25%">
         <q-tab-panels v-model="date" animated transition-prev="jump-up" transition-next="jump-up">
           <q-tab-panel v-for="item in checkInData" :key="item.id" :name="item.name">
@@ -48,56 +48,57 @@
 </template>
 
 <script>
-import { date } from "quasar";
-import { Icon } from "element-ui";
-export default {
-  data() {
-    return {
-      today: "",
-      date: "",
-      checkInData: [],
-      events: []
-    };
-  },
-  mounted() {
-    this.getCheckIn();
-    this.date = date.formatDate(new Date(), "YYYY/MM/DD");
-    this.today = date.formatDate(new Date(), "YYYY/MM/DD");
-  },
-  methods: {
-    formatDate(val) {
-      return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+  import {date} from "quasar";
+  import {Icon} from "element-ui";
+
+  export default {
+    data() {
+      return {
+        today: "",
+        date: "",
+        checkInData: [],
+        events: []
+      };
     },
-    optionsFn(date) {
-      return "2020/01/01" <= date && date <= this.today;
-    },
-    async getCheckIn() {
-      let params = new URLSearchParams();
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.post("/user/checkIn/list", params);
-      this.checkInData = data.datas[0];
-      this.events = [];
-      for (let item of this.checkInData) {
-        let tempName = date.formatDate(item.checkTime, "YYYY/MM/DD");
-        item.name = tempName;
-        this.events.push(tempName);
-      }
-    },
-    async checkIn() {
-      let params = new URLSearchParams();
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.post("/user/checkIn/check", params);
-      if (data.code === 10000) {
-        this.$q.notify({
-          message: "签到成功",
-          caption: "签到成功！今天又是美好的一天呢",
-          type: "positive"
-        });
-      }
+    mounted() {
       this.getCheckIn();
+      this.date = date.formatDate(new Date(), "YYYY/MM/DD");
+      this.today = date.formatDate(new Date(), "YYYY/MM/DD");
+    },
+    methods: {
+      formatDate(val) {
+        return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+      },
+      optionsFn(date) {
+        return "2020/01/01" <= date && date <= this.today;
+      },
+      async getCheckIn() {
+        let params = new URLSearchParams();
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios.post("/user/checkIn/list", params);
+        this.checkInData = data.datas[0];
+        this.events = [];
+        for (let item of this.checkInData) {
+          let tempName = date.formatDate(item.checkTime, "YYYY/MM/DD");
+          item.name = tempName;
+          this.events.push(tempName);
+        }
+      },
+      async checkIn() {
+        let params = new URLSearchParams();
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios.post("/user/checkIn/check", params);
+        if (data.code === 10000) {
+          this.$q.notify({
+            message: "签到成功",
+            caption: "签到成功！今天又是美好的一天呢",
+            type: "positive"
+          });
+        }
+        this.getCheckIn();
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>

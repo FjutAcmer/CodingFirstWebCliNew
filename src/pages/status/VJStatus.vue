@@ -5,8 +5,9 @@
       <q-card-section class="bg-orange">
         <div class="text-h6 text-white">
           <q-avatar color="secondary">
-            <img src="https://vjudge.net/static/images/logo.ico" />
-          </q-avatar>Virtual Judge评测
+            <img src="https://vjudge.net/static/images/logo.ico"/>
+          </q-avatar>
+          Virtual Judge评测
         </div>
       </q-card-section>
       <q-card-section class="q-gutter-sm row items-center">
@@ -19,7 +20,7 @@
           placeholder="注意是昵称不是用户名"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-input
@@ -31,7 +32,7 @@
           placeholder="输入题号"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-select
@@ -46,7 +47,7 @@
           style="min-width: 240px; max-width: 300px"
         >
           <template v-if="filter.searchResult !== ''" v-slot:append>
-            <q-icon name="cancel" @click.stop="filter.searchResult = ''" class="cursor-pointer" />
+            <q-icon name="cancel" @click.stop="filter.searchResult = ''" class="cursor-pointer"/>
           </template>
         </q-select>
         <q-select
@@ -61,7 +62,7 @@
           style="min-width: 150px; max-width: 300px"
         >
           <template v-if="filter.searchLanguage !== ''" v-slot:append>
-            <q-icon name="cancel" @click.stop="filter.searchLanguage = ''" class="cursor-pointer" />
+            <q-icon name="cancel" @click.stop="filter.searchLanguage = ''" class="cursor-pointer"/>
           </template>
         </q-select>
         <q-btn class="q-mr-md" color="primary" round icon="search" @click="getStatus()"></q-btn>
@@ -91,12 +92,12 @@
           </el-table-column>
           <el-table-column label="昵称" min-width="10%">
             <template slot-scope="scope">
-              <q-btn dense no-caps flat color="primary" :label="scope.row.nickname" />
+              <q-btn dense no-caps flat color="primary" :label="scope.row.nickname"/>
             </template>
           </el-table-column>
           <el-table-column label="OJ" min-width="7%">
             <template slot-scope="scope">
-              <q-btn dense flat color="black" :label="scope.row.oj" />
+              <q-btn dense flat color="black" :label="scope.row.oj"/>
             </template>
           </el-table-column>
           <el-table-column label="题号" min-width="8%">
@@ -128,7 +129,8 @@
                 no-caps
                 color="primary"
                 @click="toVJResult(scope.row.id)"
-              >{{scope.row.language}}</q-btn>
+              >{{scope.row.language}}
+              </q-btn>
             </template>
           </el-table-column>
           <el-table-column prop="length" label="代码长" min-width="6%"></el-table-column>
@@ -150,7 +152,7 @@
           </el-table-column>
         </el-table>
         <div class="row">
-          <q-space />
+          <q-space/>
           <el-pagination
             class="col-auto"
             layout="prev, pager, next"
@@ -162,152 +164,153 @@
           ></el-pagination>
         </div>
         <q-inner-loading :showing="loading">
-          <q-spinner-gears size="50px" color="primary" />
+          <q-spinner-gears size="50px" color="primary"/>
         </q-inner-loading>
       </q-card-section>
     </q-card>
-    <br />
+    <br/>
   </q-page>
 </template>
 
 <script>
-import { date } from "quasar";
-export default {
-  data() {
-    return {
-      loading: false,
-      filter: {
-        searchName: "",
-        searchProId: "",
-        searchResult: "",
-        searchLanguage: ""
-      },
-      pagination: {
-        currentPage: 1,
-        pageSize: 10,
-        totalRows: 0
-      },
-      data: [],
-      resultOptions: [],
-      LanguageOptions: []
-    };
-  },
-  mounted() {
-    if (this.$q.cookies.has("page-vj-status-filter")) {
-      this.filter = this.$q.cookies.get("page-vj-status-filter");
-    }
-    if (this.$q.cookies.has("page-vj-status-pagination")) {
-      this.pagination = this.$q.cookies.get("page-vj-status-pagination");
-    }
-    this.getResultOptions();
-    this.getLanguageOptions();
-    this.getStatus();
-  },
-  destroyed() {
-    this.$q.cookies.set("page-vj-status-filter", this.filter);
-    this.$q.cookies.set("page-vj-status-pagination", this.pagination);
-  },
-  methods: {
-    toVJProblem(OJId, probNum) {
-      this.$router.push({
-        name: "VJSubmit",
-        query: {
-          OJId: OJId,
-          ProbNum: probNum
-        }
-      });
+  import {date} from "quasar";
+
+  export default {
+    data() {
+      return {
+        loading: false,
+        filter: {
+          searchName: "",
+          searchProId: "",
+          searchResult: "",
+          searchLanguage: ""
+        },
+        pagination: {
+          currentPage: 1,
+          pageSize: 10,
+          totalRows: 0
+        },
+        data: [],
+        resultOptions: [],
+        LanguageOptions: []
+      };
     },
-    toVJResult(JudgeId) {
-      this.$router.push({
-        name: "VJResult",
-        query: {
-          id: JudgeId
-        }
-      });
-    },
-    cleanFilter() {
-      this.filter.searchName = "";
-      this.filter.searchProId = "";
-      this.filter.searchResult = "";
-      this.filter.searchLanguage = "";
-    },
-    switchPage(val) {
-      this.pagination.currentPage = val;
-      this.getStatus();
-    },
-    sizeChange(val) {
-      this.pagination.pageSize = val;
-      this.getStatus();
-    },
-    switchResultColor(str) {
-      if (str === "Accepted") {
-        return "positive";
-      } else if (str === "Presentation Error") {
-        return "warning";
-      } else if (
-        str === "Pending" ||
-        str === "Running" ||
-        str === "Submitted"
-      ) {
-        return "blue";
-      } else if (str === "Queuing" || str === "In judge queue") {
-        return "grey";
-      } else {
-        return "negative";
+    mounted() {
+      if (this.$q.cookies.has("page-vj-status-filter")) {
+        this.filter = this.$q.cookies.get("page-vj-status-filter");
       }
+      if (this.$q.cookies.has("page-vj-status-pagination")) {
+        this.pagination = this.$q.cookies.get("page-vj-status-pagination");
+      }
+      this.getResultOptions();
+      this.getLanguageOptions();
+      this.getStatus();
     },
-    formatDate(val) {
-      return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+    destroyed() {
+      this.$q.cookies.set("page-vj-status-filter", this.filter);
+      this.$q.cookies.set("page-vj-status-pagination", this.pagination);
     },
-    async getStatus() {
-      this.loading = true;
-      let params = new URLSearchParams();
-      params.append("pageNum", this.pagination.currentPage);
-      params.append("pageSize", this.pagination.pageSize);
-      params.append("nickname", this.filter.searchName);
-      params.append("problemId", this.filter.searchProId);
-      params.append("language", this.filter.searchLanguage);
-      params.append("result", this.filter.searchResult);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios
-        .post("/vj/judge_result/list", params)
-        .catch(() => {
-          this.loading = false;
+    methods: {
+      toVJProblem(OJId, probNum) {
+        this.$router.push({
+          name: "VJSubmit",
+          query: {
+            OJId: OJId,
+            ProbNum: probNum
+          }
         });
-      this.data = data.datas[0];
-      this.pagination.totalRows = data.datas[1];
-      this.loading = false;
-    },
-    async getResultOptions() {
-      let data = await this.$axios.post("/vj/util/statusType");
-      this.resultOptions = [];
-      this.resultOptions.push({
-        value: "",
-        label: "All"
-      });
-      for (let item of data.datas[0]) {
-        this.resultOptions.push(item);
-      }
-    },
-    async getLanguageOptions() {
-      let data = await this.$axios.post("/vj/util/languageType");
-      this.LanguageOptions = [];
-      this.LanguageOptions.push({
-        value: "",
-        label: "All"
-      });
-      for (let item of data.datas[0]) {
-        this.LanguageOptions.push(item);
+      },
+      toVJResult(JudgeId) {
+        this.$router.push({
+          name: "VJResult",
+          query: {
+            id: JudgeId
+          }
+        });
+      },
+      cleanFilter() {
+        this.filter.searchName = "";
+        this.filter.searchProId = "";
+        this.filter.searchResult = "";
+        this.filter.searchLanguage = "";
+      },
+      switchPage(val) {
+        this.pagination.currentPage = val;
+        this.getStatus();
+      },
+      sizeChange(val) {
+        this.pagination.pageSize = val;
+        this.getStatus();
+      },
+      switchResultColor(str) {
+        if (str === "Accepted") {
+          return "positive";
+        } else if (str === "Presentation Error") {
+          return "warning";
+        } else if (
+          str === "Pending" ||
+          str === "Running" ||
+          str === "Submitted"
+        ) {
+          return "blue";
+        } else if (str === "Queuing" || str === "In judge queue") {
+          return "grey";
+        } else {
+          return "negative";
+        }
+      },
+      formatDate(val) {
+        return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+      },
+      async getStatus() {
+        this.loading = true;
+        let params = new URLSearchParams();
+        params.append("pageNum", this.pagination.currentPage);
+        params.append("pageSize", this.pagination.pageSize);
+        params.append("nickname", this.filter.searchName);
+        params.append("problemId", this.filter.searchProId);
+        params.append("language", this.filter.searchLanguage);
+        params.append("result", this.filter.searchResult);
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios
+          .post("/vj/judge_result/list", params)
+          .catch(() => {
+            this.loading = false;
+          });
+        this.data = data.datas[0];
+        this.pagination.totalRows = data.datas[1];
+        this.loading = false;
+      },
+      async getResultOptions() {
+        let data = await this.$axios.post("/vj/util/statusType");
+        this.resultOptions = [];
+        this.resultOptions.push({
+          value: "",
+          label: "All"
+        });
+        for (let item of data.datas[0]) {
+          this.resultOptions.push(item);
+        }
+      },
+      async getLanguageOptions() {
+        let data = await this.$axios.post("/vj/util/languageType");
+        this.LanguageOptions = [];
+        this.LanguageOptions.push({
+          value: "",
+          label: "All"
+        });
+        for (let item of data.datas[0]) {
+          this.LanguageOptions.push(item);
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.my-card {
-  width: 95%;
-  margin: auto;
-  margin-top: 20px;
-}
+  .my-card {
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
+  }
 </style>

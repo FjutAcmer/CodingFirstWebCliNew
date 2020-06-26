@@ -24,31 +24,31 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      slide: "1",
-      data: [
-        {
-          name: "1",
-          text: "(^o^)/~新版快迁移完了"
-        },
-        {
-          name: "2",
-          text: "凸(艹皿艹 )但是还是没人用"
-        },
-        {
-          name: "3",
-          text: "其实还有很多BUG没修，要死了要死了"
-        },
-        {
-          name: "4",
-          text: "现任开发团队：吴宇翔 钟美林"
-        }
-      ]
-    };
-  }
-};
+  export default {
+    data() {
+      return {
+        slide: "1",
+        data: [
+          {
+            name: "1",
+            text: "(^o^)/~新版快迁移完了"
+          },
+          {
+            name: "2",
+            text: "凸(艹皿艹 )但是还是没人用"
+          },
+          {
+            name: "3",
+            text: "其实还有很多BUG没修，要死了要死了"
+          },
+          {
+            name: "4",
+            text: "现任开发团队：吴宇翔 钟美林"
+          }
+        ]
+      };
+    }
+  };
 </script>
 
 <style lang="scss" scoped>

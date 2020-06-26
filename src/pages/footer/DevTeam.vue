@@ -119,17 +119,17 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    callLeader() {
-      window.open("mailto:wyxworkmail@163.com");
+  export default {
+    methods: {
+      callLeader() {
+        window.open("mailto:wyxworkmail@163.com");
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.my-card {
-  width: 50%;
-}
+  .my-card {
+    width: 50%;
+  }
 </style>

@@ -10,13 +10,14 @@
               size="lg"
               text-color="white"
               :color="switchResultColor(status.result)"
-            >{{this.status.result}}</q-chip>
+            >{{this.status.result}}
+            </q-chip>
           </div>
           <div class="text-h6">
             由
             <q-chip clickable color="primary" text-color="white" size="lg">
               <q-avatar>
-                <img :src="userCustomInfo.avatarUrl" />
+                <img :src="userCustomInfo.avatarUrl"/>
               </q-avatar>
               {{userCustomInfo.adjectiveTitle}}{{userCustomInfo.articleTitle}}
               {{userCustomInfo.nickname}}
@@ -31,7 +32,7 @@
           <q-chip color="primary" text-color="white">时间消耗：{{status.timeUsed}}</q-chip>
           <q-chip color="primary" text-color="white">内存消耗：{{status.memoryUsed}}</q-chip>
         </q-card-section>
-        <q-separator />
+        <q-separator/>
         <q-card-section>
           <div class="text-h6 q-mb-md">
             评测机反馈：
@@ -49,7 +50,7 @@
             </div>
           </div>
         </q-card-section>
-        <q-separator />
+        <q-separator/>
 
         <q-card-section>
           <div class="q-mb-md">
@@ -65,66 +66,67 @@
 </template>
 
 <script>
-import { date } from "quasar";
-import AceEditor from "components/common/AceEditor.vue";
-export default {
-  components: {
-    AceEditor
-  },
-  data() {
-    return {
-      result: [],
-      status: "",
-      userCustomInfo: ""
-    };
-  },
-  mounted() {
-    this.getResult();
-  },
-  methods: {
-    formatDate(val) {
-      return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+  import {date} from "quasar";
+  import AceEditor from "components/common/AceEditor.vue";
+
+  export default {
+    components: {
+      AceEditor
     },
-    switchResultColor(str) {
-      if (str === "Accepted" || str === "Score 100") {
-        return "positive";
-      } else if (str === "Presentation Error") {
-        return "warning";
-      } else if (
-        str === "Pending..." ||
-        str === "Judging..." ||
-        str === "Running..."
-      ) {
-        return "grey";
-      } else if (str.substring(0, 5) === "Score") {
-        return "blue";
-      } else if (str === "Submit Error") {
-        return "secondary";
-      } else {
-        return "negative";
+    data() {
+      return {
+        result: [],
+        status: "",
+        userCustomInfo: ""
+      };
+    },
+    mounted() {
+      this.getResult();
+    },
+    methods: {
+      formatDate(val) {
+        return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+      },
+      switchResultColor(str) {
+        if (str === "Accepted" || str === "Score 100") {
+          return "positive";
+        } else if (str === "Presentation Error") {
+          return "warning";
+        } else if (
+          str === "Pending..." ||
+          str === "Judging..." ||
+          str === "Running..."
+        ) {
+          return "grey";
+        } else if (str.substring(0, 5) === "Score") {
+          return "blue";
+        } else if (str === "Submit Error") {
+          return "secondary";
+        } else {
+          return "negative";
+        }
+      },
+      async getResult() {
+        let params = new URLSearchParams();
+        params.append("judgeId", this.$route.query.id);
+        let data = await this.$axios.post("/judge_result/info", params);
+        this.result = data.datas[0];
+        this.status = data.datas[1];
+        // 获取完基本信息后获取用户的个性化信息
+        this.getUserCustomInfo();
+      },
+      async getUserCustomInfo() {
+        let params = new URLSearchParams();
+        params.append("username", this.status.username);
+        let data = await this.$axios.post("/user/info/custom", params);
+        this.userCustomInfo = data.datas[0];
       }
-    },
-    async getResult() {
-      let params = new URLSearchParams();
-      params.append("judgeId", this.$route.query.id);
-      let data = await this.$axios.post("/judge_result/info", params);
-      this.result = data.datas[0];
-      this.status = data.datas[1];
-      // 获取完基本信息后获取用户的个性化信息
-      this.getUserCustomInfo();
-    },
-    async getUserCustomInfo() {
-      let params = new URLSearchParams();
-      params.append("username", this.status.username);
-      let data = await this.$axios.post("/user/info/custom", params);
-      this.userCustomInfo = data.datas[0];
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.my-card {
-  width: 95%;
-}
+  .my-card {
+    width: 95%;
+  }
 </style>

@@ -11,7 +11,8 @@
                 text-color="white"
                 icon="check"
                 color="positive"
-              >最早于{{formatDate(userSolved.firstSolvedTime)}} Accepted</q-chip>
+              >最早于{{formatDate(userSolved.firstSolvedTime)}} Accepted
+              </q-chip>
               <q-chip v-else text-color="white" icon="close" color="negative">未解决</q-chip>
             </div>
             <q-chip
@@ -52,13 +53,15 @@
               text-color="white"
               icon="adjust"
               color="negative"
-            >特判SPJ</q-chip>
+            >特判SPJ
+            </q-chip>
             <q-chip
               v-else-if="problemView.spj === 0"
               text-color="white"
               icon="brightness_1"
               color="accent"
-            >非特判SPJ</q-chip>
+            >非特判SPJ
+            </q-chip>
             <q-chip text-color="white" icon="person" color="warning">出题人：{{problemInfo.author}}</q-chip>
           </div>
           <div class="q-mb-md q-gutter-x-md q-gutter-y-md text-weight-bold">
@@ -71,7 +74,7 @@
               <div class="text-subtitle1 text-white text-weight-bold">题目描述</div>
             </q-card-section>
             <q-card-section>
-              <div v-html="problemView.description" />
+              <div v-html="problemView.description"/>
             </q-card-section>
           </q-card>
           <q-card class="q-mb-md">
@@ -79,7 +82,7 @@
               <div class="text-subtitle1 text-white text-weight-bold">输入</div>
             </q-card-section>
             <q-card-section>
-              <div v-html="problemView.input" />
+              <div v-html="problemView.input"/>
             </q-card-section>
           </q-card>
           <q-card class="q-mb-md">
@@ -87,7 +90,7 @@
               <div class="text-subtitle1 text-white text-weight-bold">输出</div>
             </q-card-section>
             <q-card-section>
-              <div v-html="problemView.output" />
+              <div v-html="problemView.output"/>
             </q-card-section>
           </q-card>
           <div class="row" v-for="item in problemSamples" :key="item.id">
@@ -95,20 +98,22 @@
               <q-card-section class="bg-grey q-pa-sm">
                 <div
                   class="text-subtitle1 text-white text-weight-bold"
-                >输入样例 {{String.fromCharCode(item.caseOrder+65)}}</div>
+                >输入样例 {{String.fromCharCode(item.caseOrder+65)}}
+                </div>
               </q-card-section>
               <q-card-section>
-                <div v-html="item.inputCase" />
+                <div v-html="item.inputCase"/>
               </q-card-section>
             </q-card>
             <q-card class="col q-mb-md q-ml-xs">
               <q-card-section class="bg-grey q-pa-sm">
                 <div
                   class="text-subtitle1 text-white text-weight-bold"
-                >输出样例 {{String.fromCharCode(item.caseOrder+65)}}</div>
+                >输出样例 {{String.fromCharCode(item.caseOrder+65)}}
+                </div>
               </q-card-section>
               <q-card-section>
-                <div v-html="item.outputCase" />
+                <div v-html="item.outputCase"/>
               </q-card-section>
             </q-card>
           </div>
@@ -117,18 +122,18 @@
               <div class="text-subtitle1 text-white text-weight-bold">提示</div>
             </q-card-section>
             <q-card-section>
-              <div v-html="problemView.hint" />
+              <div v-html="problemView.hint"/>
             </q-card-section>
           </q-card>
         </div>
       </template>
       <template v-slot:separator>
-        <q-avatar color="primary" text-color="white" size="40px" icon="drag_indicator" />
+        <q-avatar color="primary" text-color="white" size="40px" icon="drag_indicator"/>
       </template>
       <template v-slot:after>
         <div class="q-pa-md" v-if="$store.getters['global/getIsLogin']">
           <div class="row q-gutter-x-sm q-mb-sm">
-            <q-space />
+            <q-space/>
             <q-select
               dense
               class="width-select"
@@ -158,7 +163,7 @@
           <q-dialog maximized v-model="fullScreen">
             <q-card class="bg-white">
               <q-bar>
-                <q-space />
+                <q-space/>
                 <q-btn color="primary" round icon="fullscreen_exit" v-close-popup>
                   <q-tooltip content-class="bg-white text-primary text-subtitle2">取消全屏</q-tooltip>
                 </q-btn>
@@ -181,8 +186,10 @@
         </div>
         <div v-else>
           <div class="q-ma-md">
-            <q-btn @click="toLogin()" outline>登录</q-btn>后才能作答，如果没有账号，请
-            <q-btn @click="toRegister()" outline>注册</q-btn>一个
+            <q-btn @click="toLogin()" outline>登录</q-btn>
+            后才能作答，如果没有账号，请
+            <q-btn @click="toRegister()" outline>注册</q-btn>
+            一个
           </div>
         </div>
       </template>
@@ -191,173 +198,175 @@
 </template>
 
 <script>
-import AceEditor from "components/common/AceEditor";
-import { date } from "quasar";
-import { Icon } from "element-ui";
-export default {
-  props: {},
-  components: {
-    AceEditor
-  },
-  watch: {},
-  data() {
-    return {
-      splitterModel: 50, // start at 50%
-      fullScreen: false,
-      problemInfo: "",
-      problemView: "",
-      problemSamples: [],
-      userSolved: "",
-      data: {
-        language: "GCC",
-        code: ""
-      },
-      langOptions: [
-        {
-          value: "G++",
-          label: "G++"
+  import AceEditor from "components/common/AceEditor";
+  import {date} from "quasar";
+  import {Icon} from "element-ui";
+
+  export default {
+    props: {},
+    components: {
+      AceEditor
+    },
+    watch: {},
+    data() {
+      return {
+        splitterModel: 50, // start at 50%
+        fullScreen: false,
+        problemInfo: "",
+        problemView: "",
+        problemSamples: [],
+        userSolved: "",
+        data: {
+          language: "GCC",
+          code: ""
         },
-        {
-          value: "GCC",
-          label: "GCC"
-        },
-        {
-          value: "JAVA",
-          label: "JAVA"
-        },
-        {
-          value: "Python",
-          label: "Python2"
-        }
-      ]
-    };
-  },
-  mounted() {
-    this.getProblemInfo();
-    if (this.$store.getters["global/getIsLogin"]) {
-      this.getUserSolved();
-    } else {
-      this.splitterModel = 70;
-    }
-  },
-  methods: {
-    toRegister() {
-      this.$router.push({ name: "register" });
-    },
-    toLogin() {
-      this.$router.push({ name: "login" });
-    },
-    formatDate(val) {
-      return date.formatDate(val, "YYYY-MM-DD");
-    },
-    getCode(code) {
-      this.data.code = code;
-    },
-    clearCode() {
-      this.$q
-        .dialog({
-          title: "警告",
-          message: "您即将清空代码，请确认",
-          cancel: true,
-          ok: {
-            push: true,
-            label: "确认清空代码",
-            color: "negative"
+        langOptions: [
+          {
+            value: "G++",
+            label: "G++"
           },
-          cancel: {
-            push: true
+          {
+            value: "GCC",
+            label: "GCC"
+          },
+          {
+            value: "JAVA",
+            label: "JAVA"
+          },
+          {
+            value: "Python",
+            label: "Python2"
           }
-        })
-        .onOk(() => {
-          this.data.code = "";
-        });
+        ]
+      };
     },
-    goFullScreen() {
-      this.fullScreen = true;
-    },
-    handleSubmit() {
-      if (this.data.code.replace(/\s+/g, "").length < 50) {
-        this.$q.notify({
-          message: "50个字符都不给我",
-          caption: "假代码，拒绝评测！哼",
-          type: "negative"
-        });
+    mounted() {
+      this.getProblemInfo();
+      if (this.$store.getters["global/getIsLogin"]) {
+        this.getUserSolved();
       } else {
-        this.doSubmit();
+        this.splitterModel = 70;
       }
     },
-    async doSubmit() {
-      this.$q.loading.show({
-        message: "正在提交代码到评测机，请稍等"
-      });
-      let params = new URLSearchParams();
-      params.append("problemId", this.$route.query.id);
-      params.append("code", this.data.code);
-      params.append("language", this.data.language);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios
-        .post("/judge_status/submit", params)
-        .catch(() => {
-          this.$q.loading.hide();
-        });
-      if (data.code === 10000) {
+    methods: {
+      toRegister() {
+        this.$router.push({name: "register"});
+      },
+      toLogin() {
+        this.$router.push({name: "login"});
+      },
+      formatDate(val) {
+        return date.formatDate(val, "YYYY-MM-DD");
+      },
+      getCode(code) {
+        this.data.code = code;
+      },
+      clearCode() {
         this.$q
           .dialog({
-            title: "提交成功",
-            message: "评测姬需要一定的时间检查你的代码，等等哦",
-            color: "primary",
-            persistent: true,
+            title: "警告",
+            message: "您即将清空代码，请确认",
+            cancel: true,
             ok: {
-              label: "点我进入评测结果列表查看",
               push: true,
-              color: "primary"
+              label: "确认清空代码",
+              color: "negative"
+            },
+            cancel: {
+              push: true
             }
           })
           .onOk(() => {
-            this.$router.push({
-              name: "localStatus"
-            });
+            this.data.code = "";
           });
-      }
-      this.$q.loading.hide();
-    },
-    async getProblemInfo() {
-      let params = new URLSearchParams();
-      params.append("problemId", this.$route.query.id);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.post("/problem/info", params);
-      this.problemInfo = data.datas[0];
-      this.problemView = data.datas[1];
-      this.problemSamples = data.datas[2];
-    },
-    async getUserSolved() {
-      let params = new URLSearchParams();
-      params.append("problemId", this.$route.query.id);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios.post("/problem/userSolved", params);
-      if (data.datas[0].length === 0) {
-        this.userSolved = {
-          id: "",
-          username: "",
-          problemId: "",
-          tryCount: 0,
-          solvedCount: 0,
-          lastTryTime: "",
-          firstSolvedTime: ""
-        };
-      } else {
-        this.userSolved = data.datas[0];
+      },
+      goFullScreen() {
+        this.fullScreen = true;
+      },
+      handleSubmit() {
+        if (this.data.code.replace(/\s+/g, "").length < 50) {
+          this.$q.notify({
+            message: "50个字符都不给我",
+            caption: "假代码，拒绝评测！哼",
+            type: "negative"
+          });
+        } else {
+          this.doSubmit();
+        }
+      },
+      async doSubmit() {
+        this.$q.loading.show({
+          message: "正在提交代码到评测机，请稍等"
+        });
+        let params = new URLSearchParams();
+        params.append("problemId", this.$route.query.id);
+        params.append("code", this.data.code);
+        params.append("language", this.data.language);
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios
+          .post("/judge_status/submit", params)
+          .catch(() => {
+            this.$q.loading.hide();
+          });
+        if (data.code === 10000) {
+          this.$q
+            .dialog({
+              title: "提交成功",
+              message: "评测姬需要一定的时间检查你的代码，等等哦",
+              color: "primary",
+              persistent: true,
+              ok: {
+                label: "点我进入评测结果列表查看",
+                push: true,
+                color: "primary"
+              }
+            })
+            .onOk(() => {
+              this.$router.push({
+                name: "localStatus"
+              });
+            });
+        }
+        this.$q.loading.hide();
+      },
+      async getProblemInfo() {
+        let params = new URLSearchParams();
+        params.append("problemId", this.$route.query.id);
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios.post("/problem/info", params);
+        this.problemInfo = data.datas[0];
+        this.problemView = data.datas[1];
+        this.problemSamples = data.datas[2];
+      },
+      async getUserSolved() {
+        let params = new URLSearchParams();
+        params.append("problemId", this.$route.query.id);
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios.post("/problem/userSolved", params);
+        if (data.datas[0].length === 0) {
+          this.userSolved = {
+            id: "",
+            username: "",
+            problemId: "",
+            tryCount: 0,
+            solvedCount: 0,
+            lastTryTime: "",
+            firstSolvedTime: ""
+          };
+        } else {
+          this.userSolved = data.datas[0];
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.probleminfo-splitter {
-  min-height: 500px;
-  .width-select {
-    width: 200px;
+  .probleminfo-splitter {
+    min-height: 500px;
+
+    .width-select {
+      width: 200px;
+    }
   }
-}
 </style>

@@ -1,9 +1,13 @@
 <template>
   <div>
     <q-card class="q-ma-sm">
+      <div id="he-plugin-standard"></div>
+    </q-card>
+    <q-card class="q-ma-sm">
       <q-card-section class="bg-blue">
         <div class="text-body1 text-white">
-          <q-icon name="emoji_events"></q-icon>积分榜
+          <q-icon name="emoji_events"></q-icon>
+          积分榜
         </div>
       </q-card-section>
       <q-card-section>
@@ -28,7 +32,8 @@
     <q-card class="q-ma-sm">
       <q-card-section class="bg-blue">
         <div class="text-body1 text-white">
-          <q-icon name="emoji_events"></q-icon>AC榜
+          <q-icon name="emoji_events"></q-icon>
+          AC榜
         </div>
       </q-card-section>
       <q-card-section>
@@ -53,7 +58,8 @@
     <q-card class="q-ma-sm">
       <q-card-section class="bg-blue">
         <div class="text-body1 text-white">
-          <q-icon name="emoji_events"></q-icon>富豪榜
+          <q-icon name="emoji_events"></q-icon>
+          富豪榜
         </div>
       </q-card-section>
       <q-card-section>
@@ -87,81 +93,86 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      ratingTop: "",
-      acTop: "",
-      acbTop: "",
-      activeTop: ""
-    };
-  },
-  mounted() {
-    this.getAllTop();
-  },
-  methods: {
-    selectColor(scoped) {
-      if (scoped.$index === 0) {
-        return "border-level-five";
-      } else if (scoped.$index >= 1 && scoped.$index < 6) {
-        return "border-level-four";
-      } else {
-        return "border-level-three";
-      }
+  export default {
+    data() {
+      return {
+        ratingTop: "",
+        acTop: "",
+        acbTop: "",
+        activeTop: ""
+      };
     },
-    async getAllTop() {
-      let params = new URLSearchParams({
-        pageNum: 1,
-        pageSize: 10
-      });
-      let dataRank = await this.$axios.get("/border/mini", params);
-      this.ratingTop = dataRank.datas[0];
-      this.acTop = dataRank.datas[1];
-      this.acbTop = dataRank.datas[2];
-      this.activeTop = dataRank.datas[3];
+    mounted() {
+      this.getAllTop();
+    },
+    methods: {
+      selectColor(scoped) {
+        if (scoped.$index === 0) {
+          return "border-level-five";
+        } else if (scoped.$index >= 1 && scoped.$index < 6) {
+          return "border-level-four";
+        } else {
+          return "border-level-three";
+        }
+      },
+      async getAllTop() {
+        let params = new URLSearchParams({
+          pageNum: 1,
+          pageSize: 10
+        });
+        let dataRank = await this.$axios.get("/border/mini", params);
+        this.ratingTop = dataRank.datas[0];
+        this.acTop = dataRank.datas[1];
+        this.acbTop = dataRank.datas[2];
+        this.activeTop = dataRank.datas[3];
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.border-level-one {
-  color: darkcyan;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
-  }
-}
+  .border-level-one {
+    color: darkcyan;
+    font-weight: bold;
 
-.border-level-two {
-  color: blue;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
-}
 
-.border-level-three {
-  color: #ff0080;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
-  }
-}
+  .border-level-two {
+    color: blue;
+    font-weight: bold;
 
-.border-level-four {
-  color: #ff0000;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
-}
 
-.border-level-five {
-  color: #ff8000;
-  font-weight: bold;
-  &:hover {
-    cursor: pointer;
+  .border-level-three {
+    color: #ff0080;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
-}
+
+  .border-level-four {
+    color: #ff0000;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .border-level-five {
+    color: #ff8000;
+    font-weight: bold;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 </style>

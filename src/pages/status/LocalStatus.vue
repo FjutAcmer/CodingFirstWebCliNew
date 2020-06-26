@@ -4,7 +4,8 @@
     <q-card class="my-card">
       <q-card-section class="bg-blue">
         <div class="text-h6 text-white">
-          <q-avatar color="secondary">LJ</q-avatar>本地评测
+          <q-avatar color="secondary">LJ</q-avatar>
+          本地评测
         </div>
       </q-card-section>
       <q-card-section class="q-gutter-sm row items-center">
@@ -17,7 +18,7 @@
           placeholder="注意是昵称不是用户名"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-input
@@ -29,7 +30,7 @@
           placeholder="输入题号"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-select
@@ -44,7 +45,7 @@
           style="min-width: 200px; max-width: 300px"
         >
           <template v-if="filter.searchResult !== ''" v-slot:append>
-            <q-icon name="cancel" @click.stop="filter.searchResult = ''" class="cursor-pointer" />
+            <q-icon name="cancel" @click.stop="filter.searchResult = ''" class="cursor-pointer"/>
           </template>
         </q-select>
         <q-select
@@ -59,7 +60,7 @@
           style="min-width: 200px; max-width: 300px"
         >
           <template v-if="filter.searchLanguage !== ''" v-slot:append>
-            <q-icon name="cancel" @click.stop="filter.searchLanguage = ''" class="cursor-pointer" />
+            <q-icon name="cancel" @click.stop="filter.searchLanguage = ''" class="cursor-pointer"/>
           </template>
         </q-select>
         <q-btn class="q-mr-md" color="primary" round icon="search" @click="getStatus()"></q-btn>
@@ -84,7 +85,7 @@
           </el-table-column>
           <el-table-column label="昵称" min-width="12%">
             <template slot-scope="scope">
-              <q-btn dense no-caps flat color="primary" :label="scope.row.nickname" />
+              <q-btn dense no-caps flat color="primary" :label="scope.row.nickname"/>
             </template>
           </el-table-column>
           <el-table-column label="题目" min-width="6%">
@@ -115,7 +116,8 @@
                 dense
                 color="primary"
                 @click="toLocalResult(scope.row.id)"
-              >{{scope.row.language}}</q-btn>
+              >{{scope.row.language}}
+              </q-btn>
             </template>
           </el-table-column>
           <el-table-column prop="codeLength" label="代码长" min-width="6%"></el-table-column>
@@ -128,7 +130,7 @@
           </el-table-column>
         </el-table>
         <div class="row">
-          <q-space />
+          <q-space/>
           <el-pagination
             class="col-auto"
             layout="prev, pager, next"
@@ -140,139 +142,140 @@
           ></el-pagination>
         </div>
         <q-inner-loading :showing="loading">
-          <q-spinner-gears size="50px" color="primary" />
+          <q-spinner-gears size="50px" color="primary"/>
         </q-inner-loading>
       </q-card-section>
     </q-card>
-    <br />
+    <br/>
   </q-page>
 </template>
 
 <script>
-import { date } from "quasar";
-export default {
-  data() {
-    return {
-      loading: false,
-      filter: {
-        searchName: "",
-        searchProId: "",
-        searchResult: "",
-        searchLanguage: ""
-      },
-      pagination: {
-        currentPage: 1,
-        pageSize: 10,
-        totalRows: 0
-      },
-      data: [],
-      resultOptions: [],
-      LanguageOptions: []
-    };
-  },
-  mounted() {
-    if (this.$q.cookies.has("page-local-status-filter")) {
-      this.filter = this.$q.cookies.get("page-local-status-filter");
-    }
-    if (this.$q.cookies.has("page-local-status-pagination")) {
-      this.pagination = this.$q.cookies.get("page-local-status-pagination");
-    }
-    this.getResultOptions();
-    this.getLanguageOptions();
-    this.getStatus();
-  },
-  destroyed() {
-    this.$q.cookies.set("page-local-status-filter", this.filter);
-    this.$q.cookies.set("page-local-status-pagination", this.pagination);
-  },
-  methods: {
-    toLocalProblem(probId) {
-      this.$router.push({
-        name: "localSubmit",
-        query: {
-          id: probId
-        }
-      });
+  import {date} from "quasar";
+
+  export default {
+    data() {
+      return {
+        loading: false,
+        filter: {
+          searchName: "",
+          searchProId: "",
+          searchResult: "",
+          searchLanguage: ""
+        },
+        pagination: {
+          currentPage: 1,
+          pageSize: 10,
+          totalRows: 0
+        },
+        data: [],
+        resultOptions: [],
+        LanguageOptions: []
+      };
     },
-    toLocalResult(JudgeId) {
-      this.$router.push({
-        name: "localResult",
-        query: {
-          id: JudgeId
-        }
-      });
-    },
-    cleanFilter() {
-      this.filter.searchName = "";
-      this.filter.searchProId = "";
-      this.filter.searchResult = "";
-      this.filter.searchLanguage = "";
-    },
-    switchPage(val) {
-      this.pagination.currentPage = val;
-      this.getStatus();
-    },
-    sizeChange(val) {
-      this.pagination.pageSize = val;
-      this.getStatus();
-    },
-    switchResultColor(str) {
-      if (str === "Accepted" || str === "Score 100") {
-        return "positive";
-      } else if (str === "Presentation Error") {
-        return "warning";
-      } else if (
-        str === "Pending..." ||
-        str === "Judging..." ||
-        str === "Running..."
-      ) {
-        return "grey";
-      } else if (str.substring(0, 5) === "Score") {
-        return "blue";
-      } else if (str === "Submit Error") {
-        return "secondary";
-      } else {
-        return "negative";
+    mounted() {
+      if (this.$q.cookies.has("page-local-status-filter")) {
+        this.filter = this.$q.cookies.get("page-local-status-filter");
       }
+      if (this.$q.cookies.has("page-local-status-pagination")) {
+        this.pagination = this.$q.cookies.get("page-local-status-pagination");
+      }
+      this.getResultOptions();
+      this.getLanguageOptions();
+      this.getStatus();
     },
-    formatDate(val) {
-      return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+    destroyed() {
+      this.$q.cookies.set("page-local-status-filter", this.filter);
+      this.$q.cookies.set("page-local-status-pagination", this.pagination);
     },
-    async getStatus() {
-      this.loading = true;
-      let params = new URLSearchParams();
-      params.append("pageNum", this.pagination.currentPage);
-      params.append("pageSize", this.pagination.pageSize);
-      params.append("problemId", this.filter.searchProId);
-      params.append("nickname", this.filter.searchName);
-      params.append("language", this.filter.searchLanguage);
-      params.append("result", this.filter.searchResult);
-      params.append("username", this.$store.getters["global/getUsername"]);
-      let data = await this.$axios
-        .get("/judge_status/list", params)
-        .catch(() => {
-          this.loading = false;
+    methods: {
+      toLocalProblem(probId) {
+        this.$router.push({
+          name: "localSubmit",
+          query: {
+            id: probId
+          }
         });
-      this.data = data.datas[0];
-      this.pagination.totalRows = data.datas[1];
-      this.loading = false;
-    },
-    async getResultOptions() {
-      let data = await this.$axios.get("/util/submitResult");
-      this.resultOptions = data.datas[0];
-    },
-    async getLanguageOptions() {
-      let data = await this.$axios.get("/util/codeLanguage");
-      this.LanguageOptions = data.datas[0];
+      },
+      toLocalResult(JudgeId) {
+        this.$router.push({
+          name: "localResult",
+          query: {
+            id: JudgeId
+          }
+        });
+      },
+      cleanFilter() {
+        this.filter.searchName = "";
+        this.filter.searchProId = "";
+        this.filter.searchResult = "";
+        this.filter.searchLanguage = "";
+      },
+      switchPage(val) {
+        this.pagination.currentPage = val;
+        this.getStatus();
+      },
+      sizeChange(val) {
+        this.pagination.pageSize = val;
+        this.getStatus();
+      },
+      switchResultColor(str) {
+        if (str === "Accepted" || str === "Score 100") {
+          return "positive";
+        } else if (str === "Presentation Error") {
+          return "warning";
+        } else if (
+          str === "Pending..." ||
+          str === "Judging..." ||
+          str === "Running..."
+        ) {
+          return "grey";
+        } else if (str.substring(0, 5) === "Score") {
+          return "blue";
+        } else if (str === "Submit Error") {
+          return "secondary";
+        } else {
+          return "negative";
+        }
+      },
+      formatDate(val) {
+        return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+      },
+      async getStatus() {
+        this.loading = true;
+        let params = new URLSearchParams();
+        params.append("pageNum", this.pagination.currentPage);
+        params.append("pageSize", this.pagination.pageSize);
+        params.append("problemId", this.filter.searchProId);
+        params.append("nickname", this.filter.searchName);
+        params.append("language", this.filter.searchLanguage);
+        params.append("result", this.filter.searchResult);
+        params.append("username", this.$store.getters["global/getUsername"]);
+        let data = await this.$axios
+          .get("/judge_status/list", params)
+          .catch(() => {
+            this.loading = false;
+          });
+        this.data = data.datas[0];
+        this.pagination.totalRows = data.datas[1];
+        this.loading = false;
+      },
+      async getResultOptions() {
+        let data = await this.$axios.get("/util/submitResult");
+        this.resultOptions = data.datas[0];
+      },
+      async getLanguageOptions() {
+        let data = await this.$axios.get("/util/codeLanguage");
+        this.LanguageOptions = data.datas[0];
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.my-card {
-  width: 95%;
-  margin: auto;
-  margin-top: 20px;
-}
+  .my-card {
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
+  }
 </style>

@@ -26,82 +26,82 @@
           label="回复"
           @click="onOKClick()"
         />
-        <q-btn color="negative" label="关闭" @click="onCancelClick()" />
+        <q-btn color="negative" label="关闭" @click="onCancelClick()"/>
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-export default {
-  props: {
-    id: Number
-    // ...你自定义的属性
-  },
-  data() {
-    return {
-      msgInfo: ""
-    };
-  },
-  mounted() {
-    this.getMessage();
-  },
-  methods: {
-    async getMessage() {
-      let params = new URLSearchParams();
-      params.append("username", this.$store.getters["global/getUsername"]);
-      params.append("messageId", this.id);
-      let data = await this.$axios.post("/user/message/info", params);
-      this.msgInfo = data.datas[0];
-      if (this.msgInfo.status === 0) {
-        this.setMessage();
+  export default {
+    props: {
+      id: Number
+      // ...你自定义的属性
+    },
+    data() {
+      return {
+        msgInfo: ""
+      };
+    },
+    mounted() {
+      this.getMessage();
+    },
+    methods: {
+      async getMessage() {
+        let params = new URLSearchParams();
+        params.append("username", this.$store.getters["global/getUsername"]);
+        params.append("messageId", this.id);
+        let data = await this.$axios.post("/user/message/info", params);
+        this.msgInfo = data.datas[0];
+        if (this.msgInfo.status === 0) {
+          this.setMessage();
+        }
+      },
+      async setMessage() {
+        let params = new URLSearchParams();
+        params.append("username", this.$store.getters["global/getUsername"]);
+        params.append("messageId", this.id);
+        params.append("status", 1);
+        let data = await this.$axios.post("/user/message/setStatus", params);
+      },
+      // 以下方法是必需的
+      // (不要改变它的名称 --> "show")
+      show() {
+        this.$refs.dialog.show();
+      },
+
+      // 以下方法是必需的
+      // (不要改变它的名称 --> "hide")
+      hide() {
+        this.$refs.dialog.hide();
+      },
+
+      onDialogHide() {
+        // QDialog发出“hide”事件时
+        // 需要发出
+        this.$emit("hide");
+      },
+
+      onOKClick() {
+        this.$router.push({name: "replayMessage"});
+        // 按OK，在隐藏QDialog之前
+        // 发出“ok”事件（带有可选的有效负载）
+        // 是必需的
+        this.$emit("ok");
+        // 或带有有效负载：this.$emit('ok', { ... })
+        // 然后隐藏对话框
+        this.hide();
+      },
+      onCancelClick() {
+        // 我们只需要隐藏对话框
+        this.hide();
       }
-    },
-    async setMessage() {
-      let params = new URLSearchParams();
-      params.append("username", this.$store.getters["global/getUsername"]);
-      params.append("messageId", this.id);
-      params.append("status", 1);
-      let data = await this.$axios.post("/user/message/setStatus", params);
-    },
-    // 以下方法是必需的
-    // (不要改变它的名称 --> "show")
-    show() {
-      this.$refs.dialog.show();
-    },
-
-    // 以下方法是必需的
-    // (不要改变它的名称 --> "hide")
-    hide() {
-      this.$refs.dialog.hide();
-    },
-
-    onDialogHide() {
-      // QDialog发出“hide”事件时
-      // 需要发出
-      this.$emit("hide");
-    },
-
-    onOKClick() {
-      this.$router.push({ name: "replayMessage" });
-      // 按OK，在隐藏QDialog之前
-      // 发出“ok”事件（带有可选的有效负载）
-      // 是必需的
-      this.$emit("ok");
-      // 或带有有效负载：this.$emit('ok', { ... })
-      // 然后隐藏对话框
-      this.hide();
-    },
-    onCancelClick() {
-      // 我们只需要隐藏对话框
-      this.hide();
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.dialog-card {
-  width: 70%;
-}
+  .dialog-card {
+    width: 70%;
+  }
 </style>

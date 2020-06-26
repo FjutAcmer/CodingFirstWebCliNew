@@ -1,7 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
-import { Notify, Dialog } from "quasar";
-
+import {Notify, Dialog} from "quasar";
+// axios的初始化文件
 const store = require("../store/index");
 
 axios.defaults.baseURL = process.env.API;
@@ -19,7 +19,7 @@ axios.interceptors.response.use(
       Notify.create({
         message: "未登录",
         caption: "您未登录，请登录后再行操作",
-        type: "negative"
+        type: "warning"
       });
     } else if (res.data.code === 20002) {
       Notify.create({
@@ -100,12 +100,12 @@ axios.interceptors.response.use(
   }
 );
 
-var http = {
+const http = {
   /** get 请求
-   * @param  {接口地址} url
-   * @param  {请求参数} params
+   * @param  {string} url
+   * @param  {URLSearchParams} params
    */
-  get: function(url, params) {
+  get: function (url, params) {
     return new Promise((resolve, reject) => {
       axios({
         method: "get",
@@ -124,10 +124,10 @@ var http = {
     });
   },
   /** post 请求
-   * @param  {接口地址} url
-   * @param  {请求参数} params
+   * @param  {string} url
+   * @param  {URLSearchParams} params
    */
-  post: function(url, params) {
+  post: function (url, params) {
     return new Promise((resolve, reject) => {
       axios({
         method: "post",
@@ -146,7 +146,7 @@ var http = {
         });
     });
   },
-  uploadFile: function(url, data) {
+  uploadFile: function (url, data) {
     return new Promise((resolve, reject) => {
       axios({
         method: "post",

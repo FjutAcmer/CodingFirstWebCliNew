@@ -10,12 +10,12 @@
       <strong>(404)</strong>
       对不起，这个页面正在施工中
     </p>
-    <q-btn color="secondary" style="width:200px;" to="/" label="返回首页" />
+    <q-btn color="secondary" style="width:200px;" to="/" label="返回首页"/>
   </div>
 </template>
 
 <script>
-export default {
-  name: "Error404"
-};
+  export default {
+    name: "Error404"
+  };
 </script>

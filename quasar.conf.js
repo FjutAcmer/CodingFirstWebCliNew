@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function(ctx) {
+module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -73,13 +73,13 @@ module.exports = function(ctx) {
       // analyze: true,
       env: ctx.dev
         ? {
-            // so on dev we'll have
-            API: JSON.stringify("http://localhost:8886/cf")
-          }
+          // so on dev we'll have
+          API: JSON.stringify("http://localhost:8886/cf")
+        }
         : {
-            // and on build (production):
-            API: JSON.stringify("https://api.fjutcoder.com/cf")
-          },
+          // and on build (production):
+          API: JSON.stringify("https://api.fjutcoder.com/cf")
+        },
       // Options below are automatically set depending on the env, set them if you want to override
       // preloadChunks: false,
       // extractCSS: false,
@@ -106,8 +106,6 @@ module.exports = function(ctx) {
     },
 
     animations: "all", // --- includes all animations
-    // https://quasar.dev/options/animations
-    animations: ["bounceInLeft", "bounceOutRight"],
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {

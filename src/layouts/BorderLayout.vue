@@ -20,24 +20,24 @@
           </q-item>
         </q-list>
       </q-drawer>
-      <q-page-container >
-        <router-view />
+      <q-page-container>
+        <router-view/>
       </q-page-container>
     </q-layout>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {};
-  },
-  methods: {
-    toPage(name) {
-      this.$router.push({ name: name });
+  export default {
+    data() {
+      return {};
+    },
+    methods: {
+      toPage(name) {
+        this.$router.push({name: name});
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>

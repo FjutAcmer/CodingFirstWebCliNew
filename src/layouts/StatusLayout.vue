@@ -7,7 +7,7 @@
         <q-item>
           <q-btn color="blue" @click="toLocalStatus()">本地评测</q-btn>
         </q-item>
-        <q-separator spaced />
+        <q-separator spaced/>
         <q-item-label header class="text-h6">第三方评测</q-item-label>
         <q-item>
           <q-btn color="orange" @click="toVJStatus()">Virtual Judge</q-btn>
@@ -15,25 +15,25 @@
       </q-list>
     </q-drawer>
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      left: false
-    };
-  },
-  methods: {
-    toLocalStatus() {
-      this.$router.push({ name: "localStatus" });
+  export default {
+    data() {
+      return {
+        left: false
+      };
     },
-    toVJStatus() {
-      this.$router.push({ name: "VJStatus" });
+    methods: {
+      toLocalStatus() {
+        this.$router.push({name: "localStatus"});
+      },
+      toVJStatus() {
+        this.$router.push({name: "VJStatus"});
+      }
     }
-  }
-};
+  };
 </script>

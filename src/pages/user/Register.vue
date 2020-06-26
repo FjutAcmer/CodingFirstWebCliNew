@@ -107,9 +107,9 @@
               label="个人宣言"
               placeholder="随便说两句，让大家知道你是谁，不说也行"
             />
-            <AvatarUploader class="q-my-md" :doUpload="doUpload" @returnUrl="getAvatarUrl" />
+            <AvatarUploader class="q-my-md" :doUpload="doUpload" @returnUrl="getAvatarUrl"/>
             <div class="row q-gutter-x-md">
-              <img @click="getCaptcha()" class="captcha-img" :src="captchaUrl" alt="验证码" />
+              <img @click="getCaptcha()" class="captcha-img" :src="captchaUrl" alt="验证码"/>
               <q-input
                 v-model="data.captcha"
                 label="请输入验证码"
@@ -132,127 +132,129 @@
 </template>
 
 <script>
-import AvatarUploader from "components/common/AvatarUploader.vue";
-export default {
-  components: {
-    AvatarUploader
-  },
-  data() {
-    return {
-      data: {
-        username: "",
-        password: "",
-        checkPassword: "",
-        nickname: "",
-        gender: "",
-        email: "",
-        phone: "",
-        motto: "",
-        avatarUrl: "",
-        captcha: ""
-      },
-      captchaUrl: "",
-      btnLoading: false,
-      // 触发上传
-      doUpload: false,
-      // 是否上传完成
-      uploadCompleted: false,
-      uploadAvatarUrl: process.env.API + "/upload/avatar"
-    };
-  },
-  watch: {
-    uploadCompleted(val) {
-      if (val) {
-        this.doRegister();
-      }
-    }
-  },
-  mounted() {
-    this.getGuestToken();
-  },
-  methods: {
-    onSubmit() {
-      this.btnLoading = true;
-      // 如果图片还没上传
-      if (this.doUpload === false) {
-        // 触发上传，并在上传中执行注册方法
-        this.doUpload = true;
-      }
-      // 如果图片已经上传，因为某种原因上传时的注册失败
-      else {
-        // 手动执行注册
-        this.doRegister();
-      }
+  import AvatarUploader from "components/common/AvatarUploader.vue";
+
+  export default {
+    components: {
+      AvatarUploader
     },
-    onReset() {
-      this.data = {
-        username: "",
-        password: "",
-        checkPassword: "",
-        nickname: "",
-        gender: "",
-        email: "",
-        phone: "",
-        motto: "",
-        avatarUrl: ""
+    data() {
+      return {
+        data: {
+          username: "",
+          password: "",
+          checkPassword: "",
+          nickname: "",
+          gender: "",
+          email: "",
+          phone: "",
+          motto: "",
+          avatarUrl: "",
+          captcha: ""
+        },
+        captchaUrl: "",
+        btnLoading: false,
+        // 触发上传
+        doUpload: false,
+        // 是否上传完成
+        uploadCompleted: false,
+        uploadAvatarUrl: process.env.API + "/upload/avatar"
       };
     },
-    getAvatarUrl(val) {
-      this.data.avatarUrl = val;
-      this.uploadCompleted = true;
+    watch: {
+      uploadCompleted(val) {
+        if (val) {
+          this.doRegister();
+        }
+      }
     },
-    async doRegister() {
-      let params = new URLSearchParams();
-      params.append("username", this.data.username);
-      params.append("password", this.data.password);
-      params.append("nickname", this.data.nickname);
-      params.append("gender", this.data.gender);
-      params.append("email", this.data.email);
-      params.append("phone", this.data.phone);
-      params.append("motto", this.data.motto);
-      params.append("avatarUrl", this.data.avatarUrl);
-      params.append("captcha", this.data.captcha);
-      let data = await this.$axios.post("/user/register", params).catch(() => {
+    mounted() {
+      this.getGuestToken();
+    },
+    methods: {
+      onSubmit() {
+        this.btnLoading = true;
+        // 如果图片还没上传
+        if (this.doUpload === false) {
+          // 触发上传，并在上传中执行注册方法
+          this.doUpload = true;
+        }
+        // 如果图片已经上传，因为某种原因上传时的注册失败
+        else {
+          // 手动执行注册
+          this.doRegister();
+        }
+      },
+      onReset() {
+        this.data = {
+          username: "",
+          password: "",
+          checkPassword: "",
+          nickname: "",
+          gender: "",
+          email: "",
+          phone: "",
+          motto: "",
+          avatarUrl: ""
+        };
+      },
+      getAvatarUrl(val) {
+        this.data.avatarUrl = val;
+        this.uploadCompleted = true;
+      },
+      async doRegister() {
+        let params = new URLSearchParams();
+        params.append("username", this.data.username);
+        params.append("password", this.data.password);
+        params.append("nickname", this.data.nickname);
+        params.append("gender", this.data.gender);
+        params.append("email", this.data.email);
+        params.append("phone", this.data.phone);
+        params.append("motto", this.data.motto);
+        params.append("avatarUrl", this.data.avatarUrl);
+        params.append("captcha", this.data.captcha);
+        let data = await this.$axios.post("/user/register", params).catch(() => {
+          this.btnLoading = false;
+        });
+        if (data.code === 10000) {
+          this.$q.notify({
+            message: "账号注册成功！",
+            caption: "现在快登录一下吧！",
+            type: "positive"
+          });
+          this.$router.push({name: "index"});
+        } else if (data.code === 10005) {
+          this.$q.notify({
+            message: data.msg,
+            type: "negative"
+          });
+          this.getCaptcha();
+        }
         this.btnLoading = false;
-      });
-      if (data.code === 10000) {
-        this.$q.notify({
-          message: "账号注册成功！",
-          caption: "现在快登录一下吧！",
-          type: "positive"
-        });
-        this.$router.push({ name: "index" });
-      } else if (data.code === 10005) {
-        this.$q.notify({
-          message: data.msg,
-          type: "negative"
-        });
-        this.getCaptcha();
+      },
+      async getGuestToken() {
+        if (!this.$store.getters["global/getIsLogin"]) {
+          let data = await this.$axios.post("/user/guest/token");
+          this.$store.commit("global/setToken", data.datas[0]);
+          this.getCaptcha();
+        }
+      },
+      async getCaptcha() {
+        let data = await this.$axios.post("/util/captcha");
+        this.captchaUrl = process.env.API + data.datas[0];
       }
-      this.btnLoading = false;
-    },
-    async getGuestToken() {
-      if (!this.$store.getters["global/getIsLogin"]) {
-        let data = await this.$axios.post("/user/guest/token");
-        this.$store.commit("global/setToken", data.datas[0]);
-        this.getCaptcha();
-      }
-    },
-    async getCaptcha() {
-      let data = await this.$axios.post("/util/captcha");
-      this.captchaUrl = process.env.API + data.datas[0];
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.my-card {
-  min-height: 600px;
-  .captcha-img {
-    cursor: pointer;
-    width: 180px;
-    height: 60px;
+  .my-card {
+    min-height: 600px;
+
+    .captcha-img {
+      cursor: pointer;
+      width: 180px;
+      height: 60px;
+    }
   }
-}
 </style>

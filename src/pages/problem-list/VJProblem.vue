@@ -3,13 +3,15 @@
     <q-banner class="text-white bg-positive">TIP：Judge题库内的题目均从Virtual Judge平台获取，如果加载较慢请稍等</q-banner>
     <q-banner
       class="text-white bg-warning"
-    >WARN：为了加强用户体验（不会那么卡），所有近期被访问过的题目会在本地服务器上缓存7天，如果出现奇怪的错误，请到VJ源地址查看题目是否最新</q-banner>
+    >WARN：为了加强用户体验（不会那么卡），所有近期被访问过的题目会在本地服务器上缓存7天，如果出现奇怪的错误，请到VJ源地址查看题目是否最新
+    </q-banner>
     <q-card class="my-card">
       <q-card-section class="bg-orange">
         <div class="text-h6 text-white">
           <q-avatar color="secondary">
-            <img src="https://vjudge.net/static/images/logo.ico" />
-          </q-avatar>Virtual Judge 题库
+            <img src="https://vjudge.net/static/images/logo.ico"/>
+          </q-avatar>
+          Virtual Judge 题库
         </div>
       </q-card-section>
       <q-card-section class="q-gutter-sm row items-center">
@@ -25,7 +27,7 @@
           style="min-width: 150px;"
         >
           <template v-if="filter.searchTag" v-slot:append>
-            <q-icon name="cancel" @click.stop="filter.searchTag = ''" class="cursor-pointer" />
+            <q-icon name="cancel" @click.stop="filter.searchTag = ''" class="cursor-pointer"/>
           </template>
         </q-select>
         <q-input
@@ -37,7 +39,7 @@
           placeholder="输入题号，可模糊查询"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-input
@@ -49,7 +51,7 @@
           placeholder="输入标题，可模糊查询"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-input
@@ -61,7 +63,7 @@
           placeholder="输入来源，可模糊查询"
         >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
         <q-btn class="q-mr-md" color="primary" round icon="search" @click="getVJProblem()"></q-btn>
@@ -112,7 +114,7 @@
         </el-table>
 
         <div class="row">
-          <q-space />
+          <q-space/>
           <el-pagination
             class="col-auto"
             layout="prev, pager, next, jumper"
@@ -124,130 +126,131 @@
           ></el-pagination>
         </div>
         <q-inner-loading :showing="loading">
-          <q-spinner-gears size="50px" color="primary" />
+          <q-spinner-gears size="50px" color="primary"/>
         </q-inner-loading>
       </q-card-section>
     </q-card>
-    <br />
+    <br/>
   </q-page>
 </template>
 
 <script>
-import { date } from "quasar";
-export default {
-  data() {
-    return {
-      loading: false,
-      filter: {
-        searchOJId: "All",
-        searchProId: "",
-        searchTitle: "",
-        searchResource: ""
-      },
-      pagination: {
-        currentPage: 1,
-        pageSize: 10,
-        totalRows: 0
-      },
-      OJs: [],
-      data: []
-    };
-  },
-  mounted() {
-    if (this.$q.cookies.has("page-vj-problem-filter")) {
-      this.filter = this.$q.cookies.get("page-vj-problem-filter");
-    }
-    if (this.$q.cookies.has("page-vj-problem-pagination")) {
-      this.pagination = this.$q.cookies.get("page-vj-problem-pagination");
-    }
-    this.getVJProblem();
-    this.getOJs();
-  },
-  destroyed() {
-    this.$q.cookies.set("page-vj-problem-filter", this.filter);
-    this.$q.cookies.set("page-vj-problem-pagination", this.pagination);
-  },
-  methods: {
-    cleanFilter() {
-      (this.filter.searchProId = ""), (this.filter.searchOJId = "All");
-      this.filter.searchTitle = "";
-      this.filter.searchResource = "";
+  import {date} from "quasar";
+
+  export default {
+    data() {
+      return {
+        loading: false,
+        filter: {
+          searchOJId: "All",
+          searchProId: "",
+          searchTitle: "",
+          searchResource: ""
+        },
+        pagination: {
+          currentPage: 1,
+          pageSize: 10,
+          totalRows: 0
+        },
+        OJs: [],
+        data: []
+      };
     },
-    switchPage(val) {
-      this.pagination.currentPage = val;
-      this.getVJProblem();
-    },
-    sizeChange(val) {
-      this.pagination.pageSize = val;
-      this.getVJProblem();
-    },
-    formatDate(val) {
-      return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
-    },
-    // 获取OJ列表
-    async getOJs() {
-      let data = await this.$axios.post("/vj/util/ojs");
-      let OJs = data.datas[0];
-      this.OJs.push("All");
-      for (let key in OJs) {
-        this.OJs.push(key);
+    mounted() {
+      if (this.$q.cookies.has("page-vj-problem-filter")) {
+        this.filter = this.$q.cookies.get("page-vj-problem-filter");
       }
-    },
-    async getVJProblem() {
-      this.loading = true;
-      let params = new URLSearchParams();
-      params.append("pageNum", this.pagination.currentPage);
-      params.append("pageSize", this.pagination.pageSize);
-      params.append("OJId", this.filter.searchOJId);
-      params.append("category", "all");
-      params.append("probNum", this.filter.searchProId);
-      params.append("title", this.filter.searchTitle);
-      params.append("source", this.filter.searchResource);
-      let data = await this.$axios
-        .post("/vj/problem/list", params)
-        .catch(() => {
-          this.loading = false;
-        });
-      if (data.code === 10000) {
-        this.data = data.datas[0].data;
-        this.pagination.totalRows = data.datas[0].recordsTotal;
-        this.$q.notify({
-          message: "与Virtual Judge同步成功",
-          caption: `同步时间为：${date.formatDate(
-            data.datas[1],
-            "YYYY-MM-DD HH:mm:ss"
-          )}`,
-          type: "positive"
-        });
-      } else {
-        this.$q.notify({
-          message: "与Virtual Judge同步失败",
-          caption: `同步时间为：${date.formatDate(
-            data.datas[1],
-            "YYYY-MM-DD HH:mm:ss"
-          )}`,
-          type: "negative"
-        });
+      if (this.$q.cookies.has("page-vj-problem-pagination")) {
+        this.pagination = this.$q.cookies.get("page-vj-problem-pagination");
       }
-      this.loading = false;
+      this.getVJProblem();
+      this.getOJs();
     },
-    toVJSubmit(originOJ, originProb) {
-      this.$router.push({
-        name: "VJSubmit",
-        query: {
-          OJId: originOJ,
-          ProbNum: originProb
+    destroyed() {
+      this.$q.cookies.set("page-vj-problem-filter", this.filter);
+      this.$q.cookies.set("page-vj-problem-pagination", this.pagination);
+    },
+    methods: {
+      cleanFilter() {
+        (this.filter.searchProId = ""), (this.filter.searchOJId = "All");
+        this.filter.searchTitle = "";
+        this.filter.searchResource = "";
+      },
+      switchPage(val) {
+        this.pagination.currentPage = val;
+        this.getVJProblem();
+      },
+      sizeChange(val) {
+        this.pagination.pageSize = val;
+        this.getVJProblem();
+      },
+      formatDate(val) {
+        return date.formatDate(val, "YYYY-MM-DD HH:mm:ss");
+      },
+      // 获取OJ列表
+      async getOJs() {
+        let data = await this.$axios.post("/vj/util/ojs");
+        let OJs = data.datas[0];
+        this.OJs.push("All");
+        for (let key in OJs) {
+          this.OJs.push(key);
         }
-      });
+      },
+      async getVJProblem() {
+        this.loading = true;
+        let params = new URLSearchParams();
+        params.append("pageNum", this.pagination.currentPage);
+        params.append("pageSize", this.pagination.pageSize);
+        params.append("OJId", this.filter.searchOJId);
+        params.append("category", "all");
+        params.append("probNum", this.filter.searchProId);
+        params.append("title", this.filter.searchTitle);
+        params.append("source", this.filter.searchResource);
+        let data = await this.$axios
+          .post("/vj/problem/list", params)
+          .catch(() => {
+            this.loading = false;
+          });
+        if (data.code === 10000) {
+          this.data = data.datas[0].data;
+          this.pagination.totalRows = data.datas[0].recordsTotal;
+          this.$q.notify({
+            message: "与Virtual Judge同步成功",
+            caption: `同步时间为：${date.formatDate(
+              data.datas[1],
+              "YYYY-MM-DD HH:mm:ss"
+            )}`,
+            type: "positive"
+          });
+        } else {
+          this.$q.notify({
+            message: "与Virtual Judge同步失败",
+            caption: `同步时间为：${date.formatDate(
+              data.datas[1],
+              "YYYY-MM-DD HH:mm:ss"
+            )}`,
+            type: "negative"
+          });
+        }
+        this.loading = false;
+      },
+      toVJSubmit(originOJ, originProb) {
+        this.$router.push({
+          name: "VJSubmit",
+          query: {
+            OJId: originOJ,
+            ProbNum: originProb
+          }
+        });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.my-card {
-  width: 95%;
-  margin: auto;
-  margin-top: 20px;
-}
+  .my-card {
+    width: 95%;
+    margin: auto;
+    margin-top: 20px;
+  }
 </style>
